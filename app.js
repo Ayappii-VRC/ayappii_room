@@ -3,7 +3,7 @@ const STRINGS = {
   ja: {
     introGreeting: "おはっぴ～！",
     introBody:
-      "聴者だよ。手話が大好きで絶賛勉強中！ここは私の学習記録をまとめた場所だよ。教育目的ではないので注意(>_<)",
+      "手話が大好きで絶賛勉強中！ここは私の学習記録をまとめた場所だよ。教育目的ではないので注意(>_<)",
     levelJSL: "日本手話",
     levelASL: "アメリカ手話",
     searchLabel: "タイトル検索",
@@ -29,7 +29,7 @@ const STRINGS = {
   en: {
     introGreeting: "Hellooo",
     introBody:
-      "A hearing person in love with sign language <3 This is a place to keep track of my learning journey. 【Disclaimer】 it’s not for educational purposes (>_<)",
+      "A hearing person in love with sign language. This is a place to keep track of my learning journey. 【Disclaimer】 it’s not for educational purposes (>_<)",
     searchLabel: "Search title",
     sortLabel: "Sort",
     sortNewest: "Newest first",
@@ -379,5 +379,6 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
 
 
