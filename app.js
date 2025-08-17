@@ -84,7 +84,7 @@ const posts = [
   id: "b2",
   title: { ja: "初投稿✨", en: "First Post ✨" },
   datePosted: "2025-08-17",
-  tags: ["その他"],
+  tags: ["Other"],
   excerpt: { 
     ja: "自己紹介と運用について。", 
     en: "Nice to meet you!" 
@@ -381,3 +381,4 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
