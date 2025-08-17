@@ -30,8 +30,6 @@ const STRINGS = {
     introGreeting: "Hellooo",
     introBody:
       "A hearing person in love with sign language <3 This is a place to keep track of my learning journey. 【Disclaimer】 it’s not for educational purposes (>_<)",
-    levelJSL: "Japanese Sign Language",
-    levelASL: "American Sign Language",
     searchLabel: "Search title",
     sortLabel: "Sort",
     sortNewest: "Newest first",
@@ -381,4 +379,5 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
 
