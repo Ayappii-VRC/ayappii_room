@@ -3,7 +3,7 @@ const STRINGS = {
   ja: {
     introGreeting: "おはっぴ～！",
     introBody:
-      "手話が大好きで絶賛勉強中！ここは私の学習記録をまとめた場所だよ。教育目的ではないので注意(>_<)",
+      "聴者だよ。手話が大好きで絶賛勉強中！ここは私の学習記録をまとめた場所だよ。教育目的ではないので注意(>_<)",
     levelJSL: "日本手話",
     levelASL: "アメリカ手話",
     searchLabel: "タイトル検索",
@@ -29,7 +29,7 @@ const STRINGS = {
   en: {
     introGreeting: "Hellooo",
     introBody:
-      "A hearing person in love with sign language. This is a place to keep track of my learning journey. 【Disclaimer】 it’s not for educational purposes (>_<)",
+      "A hearing person in love with sign language <3 This is a place to keep track of my learning journey. 【Disclaimer】 it’s not for educational purposes (>_<)",
     searchLabel: "Search title",
     sortLabel: "Sort",
     sortNewest: "Newest first",
@@ -69,11 +69,19 @@ const videos = [
   },
   {
     id: "v2",
-    title: { ja: "【非公開・共有禁止】8/11 手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.11 " },
+    title: { ja: "【限定公開・共有禁止】8/11 手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.11 " },
     datePosted: "2025-08-11",
     tags: ["Archive"],
-    caption: { ja: "担当：あやっぴ", en: "Host: Ayappi" },
+    caption: { ja: "【担当】あやっぴ【クイズ・通訳】ユウ", en: "Host: Ayappii | Quiz/Translator: Yu" },
     src: "https://youtu.be/vBS79jX2jfU"
+  },
+  {
+    id: "v3",
+    title: { ja: "【限定公開・共有禁止】8/18 手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.18 " },
+    datePosted: "2025-08-18",
+    tags: ["Archive"],
+    caption: { ja: "【担当】エスナ【クイズ】あやっぴ【通訳】ユウ", en: "Host: Esna | Quiz: Ayappii | Translator: Yu" },
+    src: "https://youtu.be/Baa4h8p6aHA"
   }
 ];
 
@@ -379,6 +387,3 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
-
-
-
