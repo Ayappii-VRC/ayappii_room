@@ -3,7 +3,7 @@ const STRINGS = {
   ja: {
     introGreeting: "おはっぴ～！",
     introBody:
-      "手話が大好きで絶賛勉強中✨VRで手話を学んでいて、ここは私の学習記録をまとめた場所だよ。教育目的ではないので注意(>_<)",
+      "手話が大好きで絶賛勉強中✨ここは私の学習記録をまとめた場所だよ。手話はVRで学んでいます！教育目的ではないので注意(>_<)",
     levelJSL: "日本手話",
     levelASL: "アメリカ手話",
     searchLabel: "タイトル検索",
@@ -387,6 +387,7 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
 
 
 
