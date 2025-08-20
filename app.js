@@ -3,7 +3,7 @@ const STRINGS = {
   ja: {
     introGreeting: "おはっぴ～！",
     introBody:
-      "聴者だよ。手話が大好きで絶賛勉強中！ここは私の学習記録をまとめた場所だよ。教育目的ではないので注意(>_<)",
+      "手話が大好きで絶賛勉強中！ここは私の学習記録をまとめた場所だよ。教育目的ではないので注意(>_<)",
     levelJSL: "日本手話",
     levelASL: "アメリカ手話",
     searchLabel: "タイトル検索",
@@ -69,7 +69,7 @@ const videos = [
   },
   {
     id: "v2",
-    title: { ja: "【限定公開・共有禁止】8/11 手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.11 " },
+    title: { ja: "【限定公開・共有禁止】8/11 「手話技能検定３級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.11 " },
     datePosted: "2025-08-11",
     tags: ["Archive"],
     caption: { ja: "【担当】あやっぴ【クイズ・通訳】ユウ", en: "Host: Ayappii | Quiz/Translator: Yu" },
@@ -77,7 +77,7 @@ const videos = [
   },
   {
     id: "v3",
-    title: { ja: "【限定公開・共有禁止】8/18 手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.18 " },
+    title: { ja: "【限定公開・共有禁止】8/18 「全国手話検定５級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.18 " },
     datePosted: "2025-08-18",
     tags: ["Archive"],
     caption: { ja: "【担当】エスナ【クイズ】あやっぴ【通訳】ユウ", en: "Host: Esna | Quiz: Ayappii | Translator: Yu" },
@@ -387,3 +387,4 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
