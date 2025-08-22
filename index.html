@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ayappi Room</title>
+    <title>Ayappii Room</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
@@ -22,21 +22,31 @@
     </header>
 
     <main class="container">
-      <!-- Intro / Bio -->
-      <section class="intro card">
-        <img class="avatar" src="assets/icon.png" alt="Site icon" />
-        <div class="intro-text">
-          <h2 data-i18n="introGreeting"></h2>
-          <p data-i18n="introBody">
-          </p>
-          <ul class="badges">
-            <li class="badge">JSL: <span data-i18n="levelJSL">日本手話</span></li>
-            <li class="badge">ASL: <span data-i18n="levelASL">アメリカ手話</span></li>
-          </ul>
-        </div>
-        
-         <!-- Social icons -->
-          <nav class="profile-links" aria-label="Social links">
+      <!-- === Bio / Profile Hero (NEW) === -->
+<section class="bio-hero" id="bio">
+  <div class="bio-panel">
+    <div class="bio-wrap">
+      <!-- 左：画像（横長の上に縦長がふわっと重なる） -->
+      <div class="bio-media" data-fade-slide>
+        <figure class="photo photo-horizontal">
+          <!-- 横長 -->
+          <img src="assets/icon.png" alt="Landscape photo" />
+        </figure>
+      </div>
+
+      <!-- 右：テキスト（既存の文言を転用） -->
+      <div class="bio-text" data-fade-slide>
+        <h2 class="bio-title" data-i18n="introGreeting"></h2>
+        <p class="bio-desc" data-i18n="introBody"></p>
+
+        <!-- バッジ（お好みで） -->
+        <ul class="bio-tags">
+          <li>JSL: <span data-i18n="levelJSL">日本手話</span></li>
+          <li>ASL: <span data-i18n="levelASL">アメリカ手話</span></li>
+        </ul>
+
+        <!-- ソーシャル（元のリンクを転用） -->
+        <nav class="profile-links" aria-label="Social links">
           <a class="plink x" href="https://x.com/froppii_" target="_blank" rel="noopener" aria-label="X">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
               <path d="M18.244 2H21l-6.51 7.44L22.5 22h-6.91l-4.49-5.88L5.8 22H3l7.05-8.05L1.5 2h6.91l4.14 5.42L18.244 2Zm-1.21 18.03h1.91L7.03 3.97H5.12l11.914 16.06Z" />
@@ -48,8 +58,10 @@
             </svg>
           </a>
         </nav>
-
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
       <!-- Controls -->
       <section class="toolbar card">
@@ -91,16 +103,24 @@
         </div>
       </section>
 
-      <!-- Video List -->
-      <section class="list-section">
+      <!-- Videos -->
+      <section class="list-section style-block" data-section="videos">
         <h3 class="section-title" data-i18n="videosHeading">動画</h3>
         <div id="videoList" class="grid"></div>
       </section>
 
-      <!-- Blog List -->
-      <section class="list-section">
+      <!-- Blog -->
+      <section class="list-section style-block" data-section="blog">
         <h3 class="section-title" data-i18n="blogHeading">ブログ</h3>
         <div id="blogList" class="grid"></div>
+      </section>
+
+      <!-- Gallery-->
+      <section class="list-section style-block" data-section="gallery">
+      <h3 class="section-title" data-i18n="galleryHeading">ギャラリー</h3>
+        <div class="marquee" aria-label="photo gallery">
+          <ul id="galleryTrack" class="marquee-track" aria-hidden="true"></ul>
+        </div>
       </section>
     </main>
 
@@ -110,6 +130,9 @@
       </div>
     </footer>
 
+<script src="gallery.js"></script>
+<script src="posts.js"></script>
+<script src="videos.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
