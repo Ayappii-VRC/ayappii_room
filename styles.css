@@ -434,3 +434,77 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
   [data-fade-slide]{ transition:none !important; opacity:1 !important; transform:none !important; }
 }
 
+/* === Bio（モバイルで重なりを解消） ================================ */
+
+.profile-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;            /* ← 上に少し空間 */
+}
+.profile-links .plink{
+  display:inline-grid;
+  place-items:center;
+  width:40px;                 /* 44px目標のタップ領域に近づける */
+  height:40px;
+  border-radius:10px;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+/* 実際のアイコンサイズ（見た目はそのまま） */
+.profile-links .plink svg{
+  width:20px; height:20px;
+}
+
+@media (max-width: 860px){
+  .bio-media{
+    padding-bottom: clamp(60px, 14vw, 120px);
+  }
+  .bio-text{ position: relative; z-index: 1; } /* 念のため重なり順を前面に */
+}
+
+@media (max-width: 520px){
+  .bio-media{
+    padding-bottom: clamp(80px, 22vw, 160px);
+  }
+}
+
+/* === Bio: モバイルで画像とタイトルの間を詰める ===================== */
+@media (max-width: 860px){
+  .bio-wrap{ gap: 6px; }                      
+  .bio-media{ padding-bottom: clamp(48px, 12vw, 96px); } 
+  .photo-vertical{ bottom: -8%; }            
+}
+
+/* スマホ幅：さらにタイトに */
+@media (max-width: 520px){
+  .bio-wrap{ gap: 6px; }                     
+  .bio-media{ padding-bottom: clamp(40px, 14vw, 80px); } 
+  .photo-vertical{ bottom: -6%; }             
+}
+
+
+@media (hover: none) and (pointer: coarse){
+  .marquee-item{
+    background: transparent !important;
+    border: none !important;
+  }
+}
+
+/* iOS/Safariで発生しやすい“1pxすき間”を画像側で吸収する（bleed） */
+@supports (-webkit-touch-callout: none) {
+  .marquee-item{
+    will-change: transform;
+  }
+  .marquee-item img{
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    margin: -1px;
+    border-radius: 12px; 
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+  }
+}
+
+
