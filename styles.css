@@ -8,6 +8,14 @@
   --ring:#a8b68a;
   --radius:16px;
   --shadow:0 8px 24px rgba(0,0,0,.08);
+  --gallery-w: 350px;
+  --gallery-h: 250px;
+  --block-gray-rgb: 115, 125, 108; 
+  --block-alpha: .1;            /* 透け具合（0=透明〜1=不透明） */
+  --block-ink: #1f2937;          /* 文字色（濃いグレー） */
+  --block-border: rgba(0,0,0,.08);
+  --block-shadow: rgba(0,0,0,.12);
+  --page-gutter: 16px;           /* フルブリード用（任意） */
 }
 
 *{box-sizing:border-box}
@@ -79,10 +87,10 @@ input[type="search"]:focus, select:focus{outline:2px solid var(--ring); outline-
   background:none; border:none; color:var(--moss); font-weight:700; cursor:pointer; padding:0 4px
 }
 
-.section-title{
+/* .section-title{
   margin:28px 0 12px; font-size:1.25rem; font-weight:800; color:var(--moss-ink);
   border-left:6px solid var(--moss); padding-left:10px
-}
+} */
 .grid{
   display:grid; gap:16px;
   grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
@@ -194,3 +202,235 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
   }
   .plink{ width:36px; height:36px; border-radius:10px; }
 }
+
+/* --- Gallery (JS marquee) --- */
+.marquee{
+  position:relative;
+  overflow:hidden;
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:12px;
+}
+
+/* 両端のフェード */
+.marquee::before,
+.marquee::after{
+  content:"";
+  position:absolute; top:0; bottom:0; width:48px; pointer-events:none; z-index:2;
+}
+.marquee::before{ left:0;  background:linear-gradient(to right, var(--card), transparent); }
+.marquee::after { right:0; background:linear-gradient(to left,  var(--card), transparent); }
+
+.marquee-track{
+  display:flex; gap:12px; align-items:center;
+  width:max-content;
+  transform: translateX(0);           /* JSで更新 */
+  will-change: transform;
+}
+
+.marquee-item{
+  flex: 0 0 auto;
+  width: var(--gallery-w);
+  height: var(--gallery-h);
+  border-radius: 12px;
+  overflow: hidden;
+  background:#e8eddc;
+  border:1px solid #dfe8ce;
+}
+.marquee-item img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition: transform .28s ease; /* ←なめらか拡大 */
+}
+
+.marquee-item a{
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
+
+.marquee-item:hover img{
+  transform: scale(1.06);          /* ←拡大率は好みで調整 */
+}
+
+/* ホバーで一時停止 */
+.marquee.is-paused .marquee-track{ transition: none; }
+
+@media (max-width:520px){
+  :root{
+    --gallery-w: 200px;
+    --gallery-h: 140px;
+  }
+}
+
+/* 一行ブロックの帯 */
+.style-block .section-title{
+  display:block;
+  width:100%;
+  padding:.65rem .95rem;
+  line-height:1.25;
+  font-weight:700;
+  letter-spacing:.02em;
+  color: var(--block-ink);
+  background: var(--block-bg, rgba(var(--block-gray-rgb), var(--block-alpha)));
+
+  -webkit-backdrop-filter: blur(8px) saturate(1.05);
+  backdrop-filter: blur(8px) saturate(1.05);
+
+  box-shadow: 0 6px 18px -12px var(--block-shadow);
+}
+
+.style-block .section-title::before,
+.style-block .section-title::after{ content:none !important; }
+
+/* タイトル下の余白 */
+.style-block .section-title + *{ margin-top: 12px; }
+
+/* ホバー：控えめに浮かせるだけ（クリーン） */
+.style-block .section-title:hover{
+  transform: translateY(-1px);
+  transition: transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 10px 28px -16px var(--block-shadow);
+}
+
+.style-block-full .section-title{
+  margin-left: calc(-1 * var(--page-gutter));
+  margin-right: calc(-1 * var(--page-gutter));
+  border-radius: 0;
+  padding-left: calc(var(--page-gutter) + .95rem);
+  padding-right: calc(var(--page-gutter) + .95rem);
+}
+
+/* === Stop hover animation on section titles === */
+.style-block .section-title{ transition: none; }
+.style-block .section-title:hover{
+  transform: none;
+  box-shadow: 0 6px 18px -12px var(--block-shadow);
+}
+
+/* === Hover lift on content cards (videos & blogs) === */
+.card.post,
+.blog-accordion{
+  transition: transform .18s ease, box-shadow .18s ease;
+  will-change: transform;
+}
+
+.card.post:hover,
+.blog-accordion:hover,
+.card.post:focus-within,
+.blog-accordion:focus-within{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -14px rgba(0,0,0,.16);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .card.post, .blog-accordion{ transition: none; }
+}
+
+/* (0件の時に出す一言) */
+.empty-state{
+  grid-column: 1 / -1;                 /* グリッドを横断して中央に */
+  text-align:center;
+  color: var(--muted);
+  background: var(--card);
+  border: 1px dashed #dfe8ce;
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+/* === Bio / Profile Hero ================================================ */
+:root{
+  /* ガラス感（薄めのプラ風） */
+  --bio-glass-bg: rgba(248,249,251,.55);
+  --bio-glass-border: rgba(255,255,255,.55);
+  --bio-glass-outline: rgba(0,0,0,.06);
+  --bio-glass-shadow: 0 18px 40px -20px rgba(15,23,42,.25);
+  --bio-radius: 18px;
+
+  /* 画像と重なり具合 */
+  --bio-horiz-ratio: 16/9;   /* 横長の比率 */
+  --bio-vert-width: 36%;     /* 縦長の横幅（親に対する%） */
+  --bio-vert-tilt: -2deg;    /* 縦長の傾き */
+  --bio-gap: 28px;           /* メディアとテキストの間隔 */
+}
+
+.bio-hero{ margin: 20px 0 28px; }
+
+.bio-panel{
+  position: relative;
+  border-radius: var(--bio-radius);
+  background: var(--bio-glass-bg);
+  border: 1px solid var(--bio-glass-outline);
+  outline: 1px solid var(--bio-glass-border);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow: var(--bio-glass-shadow);
+}
+
+.bio-wrap{
+  display: grid;
+  grid-template-columns: minmax(320px, 1.2fr) 1fr;
+  gap: var(--bio-gap);
+  align-items: center;
+  padding: 20px;
+}
+
+.bio-media{ position: relative; min-height: 220px; }
+.photo{ margin: 0; }
+
+.photo-horizontal{
+  aspect-ratio: var(--bio-horiz-ratio);
+  border-radius: 14px; overflow: hidden;
+  background: #e8eddc; border: 1px solid #dde6c9;
+  box-shadow: 0 10px 22px -14px rgba(0,0,0,.18);
+}
+.photo-horizontal img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+.photo-vertical{
+  position: absolute; right: 4%; bottom: -8%;
+  width: var(--bio-vert-width);
+  transform: rotate(var(--bio-vert-tilt));
+  border-radius: 12px; overflow: hidden;
+  background:#eef2ea; border:1px solid #dfe8ce;
+  box-shadow: 0 18px 30px -18px rgba(0,0,0,.22);
+}
+.photo-vertical img{ width:100%; height:auto; object-fit:cover; display:block; }
+
+/* テキスト */
+.bio-title{ margin:0 0 6px; font-weight:800; letter-spacing:.02em; }
+.bio-desc{ margin:0 0 10px; color: var(--muted); }
+.bio-tags{ display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none; }
+.bio-tags li{
+  padding:6px 10px; border-radius:999px; font-size:.9rem;
+  background: rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.06);
+}
+
+/* 左からフワッとスライド&フェード */
+[data-fade-slide]{
+  opacity:0; transform: translateX(-24px);
+  transition: transform .6s cubic-bezier(.22,.61,.36,1), opacity .6s ease;
+  will-change: transform, opacity;
+}
+[data-fade-slide].is-in{ opacity:1; transform:none; }
+/* ちょい段差：メディア先、テキスト後 */
+.bio-media.is-in{ transition-delay:.05s; }
+.bio-text.is-in{ transition-delay:.15s; }
+
+/* モバイル最適化 */
+@media (max-width: 860px){
+  .bio-wrap{ grid-template-columns: 1fr; }
+  .photo-vertical{ right:3%; bottom:-10%; width:42%; }
+}
+@media (max-width: 520px){
+  .bio-wrap{ padding:16px; }
+  .photo-vertical{ right:2%; bottom:-12%; width:48%; }
+}
+
+/* 動き配慮 */
+@media (prefers-reduced-motion: reduce){
+  [data-fade-slide]{ transition:none !important; opacity:1 !important; transform:none !important; }
+}
+
