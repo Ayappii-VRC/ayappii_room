@@ -434,18 +434,16 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
   [data-fade-slide]{ transition:none !important; opacity:1 !important; transform:none !important; }
 }
 
-/* === Bio（モバイルで重なりを解消） ================================ */
-
 .profile-links{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  margin-top:12px;            /* ← 上に少し空間 */
+  margin-top:12px;           
 }
 .profile-links .plink{
   display:inline-grid;
   place-items:center;
-  width:40px;                 /* 44px目標のタップ領域に近づける */
+  width:40px;              
   height:40px;
   border-radius:10px;
   background: rgba(0,0,0,.06);
@@ -470,7 +468,7 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
   }
 }
 
-/* === Bio: モバイルで画像とタイトルの間を詰める ===================== */
+/* Bio: モバイルで画像とタイトルの間を詰める */
 @media (max-width: 860px){
   .bio-wrap{ gap: 6px; }                      
   .bio-media{ padding-bottom: clamp(48px, 12vw, 96px); } 
@@ -492,7 +490,6 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
   }
 }
 
-/* iOS/Safariで発生しやすい“1pxすき間”を画像側で吸収する（bleed） */
 @supports (-webkit-touch-callout: none) {
   .marquee-item{
     will-change: transform;
@@ -505,6 +502,38 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
   }
+}
+
+/*Bio: SNSアイコンを左揃えに  */
+.bio-text{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  
+  justify-self: start;      
+  gap: 8px;             
+}
+
+.bio-tags{ margin-bottom: 2px; }
+
+.profile-links{
+  align-self: flex-start;  
+  display: flex;
+  justify-content: flex-start !important;
+  gap: 10px;
+  margin-top: 8px;
+  margin-left: 0 !important; 
+}
+
+.profile-links .plink{
+  display:inline-grid; place-items:center;
+  width:40px; height:40px; border-radius:10px;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+@media (max-width: 520px){
+  .bio-text{ gap: 6px; }
+  .profile-links{ margin-top: 6px; }
 }
 
 
