@@ -3,7 +3,7 @@ const STRINGS = {
   ja: {
     introGreeting: "おはっぴ～！",
     introBody:
-      "手話が大好きで絶賛勉強中✨ここは私の学習記録をまとめた場所だよ。手話はVRで学んでいます！教育目的ではないので注意(>_<)",
+      "手話が大好きで絶賛勉強中✨ここは私の学習記録とVRCでの暮らしをまとめた場所だよ。教育目的ではないので注意(>_<)",
     levelJSL: "日本手話",
     levelASL: "アメリカ手話",
     searchLabel: "タイトル検索",
@@ -22,12 +22,16 @@ const STRINGS = {
     tagOther: "その他",
     videosHeading: "動画",
     blogHeading: "ブログ",
+    galleryHeading: "ギャラリー",
     postedOn: "投稿日",
     readMore: "続きを読む",
+    noResults: "該当のものがありません",
     footerNote: "何事も楽しく！"
+    
+    
   },
   en: {
-    introGreeting: "Hellooo",
+    introGreeting: "gm!",
     introBody:
       "A hearing person in love with sign language <3 This is a place to keep track of my learning journey. 【Disclaimer】 it’s not for educational purposes (>_<)",
     searchLabel: "Search title",
@@ -46,8 +50,10 @@ const STRINGS = {
     tagOther: "Other",
     videosHeading: "Videos",
     blogHeading: "Blog",
+    galleryHeading: "Gallery",
     postedOn: "Posted",
     readMore: "Read more",
+    noResults: "No matching items.",
     footerNote: "life is not colorful, life is coloring"
   }
 };
@@ -57,68 +63,205 @@ const TAG_LABELS = {
   en: { Archive: "Archive", Other: "Other", ASL: "ASL", JSL: "JSL" }
 };
 
-// ===== ここに直接投稿を書く =====
-const videos = [
-  {
-    id: "v1",
-    title: { ja: "【紹介動画】ねぎ手話教室", en: "【PV】Negi Sign Language Class" },
-    datePosted: "2025-08-17",
-    tags: ["Other"],
-    caption: { ja: "手話教室をご紹介します！", en: "Introducing Sign Class in VRChat" },
-    src: "https://youtu.be/yLaVVgxtzyg?si=TM4c2DUFxJu6H8GD"
-  },
-  {
-    id: "v2",
-    title: { ja: "【限定公開・共有禁止】8/11 「手話技能検定３級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.11 " },
-    datePosted: "2025-08-11",
-    tags: ["Archive"],
-    caption: { ja: "【担当】あやっぴ【クイズ・通訳】ユウ", en: "Host: Ayappii | Quiz/Translator: Yu" },
-    src: "https://youtu.be/vBS79jX2jfU"
-  },
-  {
-    id: "v3",
-    title: { ja: "【限定公開・共有禁止】8/18 「全国手話検定５級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.18 " },
-    datePosted: "2025-08-18",
-    tags: ["Archive"],
-    caption: { ja: "【担当】エスナ【クイズ】あやっぴ【通訳】ユウ", en: "Host: Esna | Quiz: Ayappii | Translator: Yu" },
-    src: "https://youtu.be/Baa4h8p6aHA"
+function getGallerySource(){
+  if (typeof gallery !== "undefined" && Array.isArray(gallery)) return gallery;
+  if (Array.isArray(window.GALLERY)) return window.GALLERY;
+  return [];
+}
+
+function getPostsSource(){
+  if (typeof posts !== "undefined" && Array.isArray(posts)) return posts; // 後方互換
+  if (Array.isArray(window.POSTS)) return window.POSTS;
+  return [];
+}
+
+function getVideosSource(){
+  if (typeof videos !== "undefined" && Array.isArray(videos)) return videos;
+  if (Array.isArray(window.VIDEOS)) return window.VIDEOS;
+  return [];
+}
+
+
+// --- Google Drive URL helpers ---
+function toDriveFileId(u){
+  if(!u) return "";
+  const m = u.match(/\/d\/([a-zA-Z0-9_-]+)/) || u.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  return m && m[1] ? m[1] : "";
+}
+function buildDriveCandidates(url){
+  const id = toDriveFileId(url);
+  if(!id) return [url];
+  return [
+    `https://drive.google.com/thumbnail?id=${id}&sz=w1600`,   // ←安定
+    `https://drive.google.com/uc?export=view&id=${id}`        // ←予備
+  ];
+}
+
+
+function uniformShuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
-];
+  return a;
+}
 
-const posts = [
-  {
-  id: "b2",
-  title: { ja: "初投稿✨", en: "First Post ✨" },
-  datePosted: "2025-08-17",
-  tags: ["Other"],
-  excerpt: { 
-    ja: "自己紹介と運用について。", 
-    en: "Nice to meet you!" 
-  },
-  content: {
-    ja: `
-<h3>はじめまして！</h3>
-<p>なんでも思い立ったらすぐのAyappiiです。VRChatに魅了され、今はどっぷり手話にはまっています(>_<)</p>
+function makeGallerySequence(items, minLen = 24){
+  // 1) 正規化（Drive直表示の候補URLを作る）
+  const normalized = (items || []).map(it => {
+    const href = it.href || it.src || "";
+    const candidates = buildDriveCandidates(href); // 先頭: 通常プレビュー / 次: サムネAPI
+    return { candidates, href, alt: it.alt || "Photo" };
+  }).filter(x => x.candidates && x.candidates[0]);
 
-<p>ぶいちゃの中で手話べりするのも楽しいけど、何か新しいことを始めたいと思い、急遽サイトを立ち上げてみました！これからの運用については正直未定です。目的はプロフィールに書かれている通り、個人の学習記録のために運用していきます。気が向いたときにブログや動画を投稿していく予定です。</p>
+  // 2) 完全重複の削除（同じ画像URLが多いと偏るため）
+  const seen = new Set();
+  const uniq = [];
+  for (const x of normalized){
+    const key = x.candidates[0]; // 同一画像判定は第一候補で
+    if (!seen.has(key)){ seen.add(key); uniq.push(x); }
+  }
+  if (uniq.length === 0) return [];
 
-<p>手話はとっても魅力的な言語で、それこそぶいちゃで無言勢の方にはつよーい味方になるんじゃないかな。このサイトは、すでにぶいちゃをやられている方も、そうでない方も、両者に対して、ただただ私の手話愛を語っていく場所です。</p>
+  // 3) Shuffle-bag を何ラウンドか連結して“均等ランダム”列を作る
+  //    ・1ラウンド = 全画像を均等シャッフルで一巡（偏りなし）
+  //    ・ラウンド境界で同じ画像が連続しないように先頭を回転
+  const rounds = Math.max(2, Math.ceil(minLen / uniq.length) + 1);
+  const seq = [];
+  let prev = null;
 
-<p>マイペースですが、どうぞよろしくお願いします！</p>
-    `,
-    en: `
-<h3>Hello!</h3>
-<p>I'm Ayappii, thanks for visiting the page! I've been captivated by VRChat, and right now I'm deeply into sign language ( >_< ).</p>
+  for (let r = 0; r < rounds; r++){
+    let bag = uniformShuffle(uniq);
+    if (prev && bag.length > 1 && bag[0].candidates[0] === prev.candidates[0]){
+      bag.push(bag.shift()); // 連続を回避
+    }
+    seq.push(...bag);
+    prev = bag[bag.length - 1];
+  }
 
-<p>Having sign talk inside VRC is fun, but I wanted to try something new, leading me to launch this site out of blue haha. Honestly, I don’t yet know how it will be run. As written in my profile, the purpose is to keep a personal learning log. I'll post blogs and videos whenever I feel like it.</p>
+  // 4) 無限ループ境界（先頭と末尾）でも重複しないよう微調整
+  if (seq.length > 1 && seq[0].candidates[0] === seq[seq.length - 1].candidates[0]){
+    seq.push(seq.shift());
+  }
 
-<p>Sign language is such a fascinating language, and for the mute users in VRChat, it could be a powerful ally. This site is simply a place for me to share my love for sign language, whether or not you’re already into VRC.</p>
+  return seq;
+}
 
-<p>It'll be at my own pace, but I hope you enjoy it!</p>
-    `
+// --- ギャラリー描画（画像onerrorでフォールバック → ダメなら要素ごと非表示） ---
+function renderGallery(){
+  const track = document.getElementById("galleryTrack");
+  const wrap  = track?.closest(".marquee");
+  if(!track || !wrap) return;
+
+  const seq = makeGallerySequence(getGallerySource());
+  if(seq.length === 0){ track.innerHTML = ""; return; }
+
+  track.innerHTML = seq.map((g) => {
+    const first = g.candidates[0];
+    const alt   = esc(g.alt);
+    const href  = g.href || first;
+    return `
+      <li class="marquee-item">
+        <a href="${esc(href)}" target="_blank" rel="noopener">
+          <img
+            src="${esc(first)}"
+            alt="${alt}"
+            loading="lazy"
+            data-fallbacks='${esc(JSON.stringify(g.candidates.slice(1)))}'
+          >
+        </a>
+      </li>`;
+  }).join("");
+
+  // ロード失敗時のフォールバックを順に試す
+  track.querySelectorAll("img").forEach(img => {
+  // ① 正常ロードが完了したらロック（以降 error 処理は無視）
+  img.addEventListener("load", () => {
+    img.dataset.locked = "1";
+    img.removeAttribute("data-fallbacks");
+  }, { once:true });
+
+  img.addEventListener("error", () => {
+    if (img.dataset.locked === "1") return; 
+    try{
+      const rest = JSON.parse(img.getAttribute("data-fallbacks") || "[]");
+      if(rest.length){
+        const next = rest.shift();
+        img.setAttribute("data-fallbacks", JSON.stringify(rest));
+        img.src = next;
+      }else{
+        const li = img.closest(".marquee-item");
+        if(li){ li.style.display = "none"; }
+      }
+    }catch(e){
+      const li = img.closest(".marquee-item");
+      if(li){ li.style.display = "none"; }
+    }
+  });
+});
+
+  startMarquee(track, wrap);
+}
+
+// --- 無限ループ: 右→左、右から新規が流入。 ---
+function startMarquee(track, wrap){
+  // ユーザー設定: reduce motion なら動かさない
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+
+  let offset = 0;                     
+  let lastTs = 0;
+  const speed = 25;                    // ＃＃　px/sec（画像の速度調整）
+  const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || "12") || 12;
+
+  // ホバー/タッチで一時停止
+  let paused = false;
+  const pause = () => { paused = true;  wrap.classList.add("is-paused"); };
+  const play  = () => { paused = false; wrap.classList.remove("is-paused"); };
+  wrap.addEventListener("mouseenter", pause);
+  wrap.addEventListener("mouseleave", play);
+  wrap.addEventListener("touchstart", pause, {passive:true});
+  wrap.addEventListener("touchend", play, {passive:true});
+
+  // アイテムが少なくて画面を埋めない場合に備えて、最低幅まで複製
+ function ensureFilled(track, wrap){
+  const need = wrap.clientWidth * 2;   
+  const snapshot = [...track.children];
+  while(track.scrollWidth < need && snapshot.length){
+    for(const node of snapshot){
+      if(track.scrollWidth >= need) break;
+      track.appendChild(node.cloneNode(true));
+    }
   }
 }
-];
+  ensureFilled(track, wrap);
+
+  function step(ts){
+    if(!lastTs) lastTs = ts;
+    const dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+
+    if(!paused){
+      offset -= speed * dt;
+      // 先頭要素を左に出し切ったら末尾へ回す（常に右から入ってくる）
+      let first = track.firstElementChild;
+      while(first){
+        const w = first.offsetWidth;   // アイテム幅
+        if(-offset >= w + gap){
+          offset += w + gap;
+          track.appendChild(first);    // 末尾へ回す
+          first = track.firstElementChild;
+        }else{
+          break;
+        }
+      }
+      track.style.transform = `translateX(${offset}px)`;
+    }
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
 
 
 // ===== state / helpers =====
@@ -173,7 +316,6 @@ const ytEmbed = (u) => {
 // ===== render =====
 function renderAll() {
   applyI18n();
-
   const vWrap = $("#videoList");
   const bWrap = $("#blogList");
   if (!vWrap || !bWrap) {
@@ -183,11 +325,16 @@ function renderAll() {
     return;
   }
 
-  const vData = videos.filter(matchesFilters).sort((a,b)=>compareBy(a,b,state.sort,state.lang));
-  vWrap.innerHTML = vData.map(renderVideoCard).join("");
+  const vData = getVideosSource().filter(matchesFilters).sort((a,b)=>compareBy(a,b,state.sort,state.lang));
+  vWrap.innerHTML = vData.length
+  ? vData.map(renderVideoCard).join("")
+  : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults)}</div>`;
+  
 
-  const bData = posts.filter(matchesFilters).sort((a,b)=>compareBy(a,b,state.sort,state.lang));
-  bWrap.innerHTML = bData.map(renderBlogCard).join("");
+  const bData = getPostsSource().filter(matchesFilters).sort((a,b)=>compareBy(a,b,state.sort,state.lang));
+  bWrap.innerHTML = bData.length
+  ? bData.map(renderBlogCard).join("")
+  : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults)}</div>`;
 
   // fullscreen（ローカル video のみ）
   $$(".video-wrap .fs").forEach((btn) => {
@@ -200,6 +347,8 @@ function renderAll() {
 
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  renderGallery();
 }
 
 function renderVideoCard(v) {
@@ -249,7 +398,7 @@ function renderBlogCard(b) {
   const content = renderRichText(b.content?.[state.lang] || b.excerpt?.[state.lang] || "");
 
   const coverImg = b.cover
-    ? `<img class="blog-cover" src="${esc(b.cover)}" alt="" loading="lazy">`
+    ? `<img class="blog-cover" src="${esc(b.cover)}" alt="" decoding="async">`
     : "";
 
   return `
@@ -380,6 +529,7 @@ function init() {
   if (!localStorage.getItem("lang")) localStorage.setItem("lang", "ja");
   initEvents();
   renderAll(); // ← 直接描画
+  setupBioAnimation();
 }
 
 if (document.readyState === "loading") {
@@ -388,6 +538,23 @@ if (document.readyState === "loading") {
   init();
 }
 
+// === Bio: fade & slide in ================================================
+let __bioInit = false;
+function setupBioAnimation(){
+  if(__bioInit) return;
+  const root = document.querySelector('.bio-hero');
+  if(!root) return;
 
+  const targets = root.querySelectorAll('[data-fade-slide]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
 
-
+  targets.forEach(t => io.observe(t));
+  __bioInit = true;
+}
