@@ -551,3 +551,32 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
   .pager{ display:none; }
 }
 
+
+
+/* --- Gallery nav buttons (透明＆丸ボタン) --- */
+.marquee-nav{
+  position:absolute;
+  top:50%;
+  transform: translateY(-50%);
+  z-index:3;
+  width:40px; height:40px;
+  display:grid; place-items:center;
+  border-radius:999px;
+  border:1px solid #ccd3c0;
+  background: rgba(255,255,255,.85);  /* 少し透過 */
+  opacity:.92;                         /* 少し透過 */
+  box-shadow: var(--shadow);
+  font-weight:800;
+  font-size:18px;
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
+}
+.marquee-nav.prev{ left:10px; }
+.marquee-nav.next{ right:10px; }
+.marquee-nav:hover,
+.marquee-nav:focus{ opacity:1; background: rgba(255,255,255,.96); outline:2px solid var(--ring); outline-offset:2px; }
+
+@media (max-width:520px){
+  .marquee-nav{ width:36px; height:36px; font-size:16px; }
+}
