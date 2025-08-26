@@ -9,7 +9,7 @@ window.VIDEOS = [
   },
   {
     id: "v2",
-    title: { ja: "【限定公開・共有禁止】8/11 「手話技能検定３級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.11 " },
+    title: { ja: "【限定公開・共有禁止】「手話技能検定３級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
     datePosted: "2025-08-11",
     tags: ["Archive"],
     caption: { ja: "【担当】あやっぴ【クイズ・通訳】ユウ", en: "Host: Ayappii | Quiz/Translator: Yu" },
@@ -17,11 +17,19 @@ window.VIDEOS = [
   },
   {
     id: "v3",
-    title: { ja: "【限定公開・共有禁止】8/18 「全国手話検定５級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive, Aug.18 " },
+    title: { ja: "【限定公開・共有禁止】「全国手話検定５級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
     datePosted: "2025-08-18",
     tags: ["Archive"],
     caption: { ja: "【担当】エスナ【クイズ】あやっぴ【通訳】ユウ", en: "Host: Esna | Quiz: Ayappii | Translator: Yu" },
     src: "https://youtu.be/Baa4h8p6aHA"
+  },
+  {
+    id: "v4",
+    title: { ja: "【限定公開・共有禁止】「手話技能検定３級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-08-25",
+    tags: ["Archive"],
+    caption: { ja: "【担当】あやっぴ【クイズ】ちろる・ユウ【通訳】ユウ", en: "Host: Ayappii | Quiz: Chiroru/Yu | Translator: Yu" },
+    src: "https://youtu.be/MpTQduwN04s"
   }
 
 ];
