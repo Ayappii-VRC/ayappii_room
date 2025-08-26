@@ -155,6 +155,8 @@ function renderGallery(){
   const wrap  = track?.closest(".marquee");
   if(!track || !wrap) return;
 
+  stopMarquee(wrap);
+
   const seq = makeGallerySequence(getGallerySource());
   if(seq.length === 0){ track.innerHTML = ""; return; }
 
@@ -169,15 +171,14 @@ function renderGallery(){
             src="${esc(first)}"
             alt="${alt}"
             loading="lazy"
+            decoding="async"
             data-fallbacks='${esc(JSON.stringify(g.candidates.slice(1)))}'
           >
         </a>
       </li>`;
   }).join("");
 
-  // ロード失敗時のフォールバックを順に試す
   track.querySelectorAll("img").forEach(img => {
-  // ① 正常ロードが完了したらロック（以降 error 処理は無視）
   img.addEventListener("load", () => {
     img.dataset.locked = "1";
     img.removeAttribute("data-fallbacks");
@@ -206,64 +207,85 @@ function renderGallery(){
   disableGalleryNavAll();
 }
 
+// ===== Gallery Marquee: stop current loop if any =====
+function stopMarquee(wrap){
+  if(!wrap || !wrap.__marquee) return;
+  const m = wrap.__marquee;
+  cancelAnimationFrame(m.rafId);
+  wrap.removeEventListener("mouseenter", m.pause);
+  wrap.removeEventListener("mouseleave", m.play);
+  wrap.removeEventListener("touchstart", m.pause);
+  wrap.removeEventListener("touchend",   m.play);
+  document.removeEventListener("visibilitychange", m.onVis);
+  delete wrap.__marquee;
+}
+
 // --- 無限ループ: 右→左、右から新規が流入。 ---
 function startMarquee(track, wrap){
-  // ユーザー設定: reduce motion なら動かさない
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce) return;
 
-  let offset = 0;                     
-  let lastTs = 0;
-  const speed = 25;                    // ＃＃　px/sec（画像の速度調整）
-  const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || "12") || 12;
+  stopMarquee(wrap);
 
-  // ホバー/タッチで一時停止
+  let offset = 0;
+  let lastTs = 0;
+  const speed = 25;  // px/sec
+  const cs = getComputedStyle(track);
+  const gap = parseFloat(cs.gap || cs.columnGap || "12") || 12;
+
   let paused = false;
   const pause = () => { paused = true;  wrap.classList.add("is-paused"); };
   const play  = () => { paused = false; wrap.classList.remove("is-paused"); };
+
   wrap.addEventListener("mouseenter", pause);
   wrap.addEventListener("mouseleave", play);
   wrap.addEventListener("touchstart", pause, {passive:true});
-  wrap.addEventListener("touchend", play, {passive:true});
+  wrap.addEventListener("touchend",   play,  {passive:true});
 
-  // アイテムが少なくて画面を埋めない場合に備えて、最低幅まで複製
- function ensureFilled(track, wrap){
-  const need = wrap.clientWidth * 2;   
-  const snapshot = [...track.children];
-  while(track.scrollWidth < need && snapshot.length){
-    for(const node of snapshot){
-      if(track.scrollWidth >= need) break;
-      track.appendChild(node.cloneNode(true));
+  const onVis = () => { if(!document.hidden) lastTs = 0; };
+  document.addEventListener("visibilitychange", onVis);
+
+  // 足りない幅を複製
+  function ensureFilled(track, wrap){
+    const need = wrap.clientWidth * 2;
+    const snapshot = [...track.children];
+    while(track.scrollWidth < need && snapshot.length){
+      for(const node of snapshot){
+        if(track.scrollWidth >= need) break;
+        track.appendChild(node.cloneNode(true));
+      }
     }
   }
-}
   ensureFilled(track, wrap);
 
   function step(ts){
     if(!lastTs) lastTs = ts;
-    const dt = (ts - lastTs) / 1000;
+    let dt = (ts - lastTs) / 1000;
+    if (dt > 1/30) dt = 1/60; 
     lastTs = ts;
 
     if(!paused){
       offset -= speed * dt;
-      // 先頭要素を左に出し切ったら末尾へ回す（常に右から入ってくる）
+
       let first = track.firstElementChild;
       while(first){
-        const w = first.offsetWidth;   // アイテム幅
+        const w = first.offsetWidth; 
         if(-offset >= w + gap){
           offset += w + gap;
-          track.appendChild(first);    // 末尾へ回す
+          track.appendChild(first);
           first = track.firstElementChild;
-        }else{
-          break;
-        }
+        }else break;
       }
-      track.style.transform = `translateX(${offset}px)`;
+      track.style.transform = `translate3d(${offset}px,0,0)`;
     }
-    requestAnimationFrame(step);
+    const rafId = requestAnimationFrame(step);
+    wrap.__marquee.rafId = rafId; 
   }
+
+  wrap.__marquee = { rafId: 0, pause, play, onVis };
   requestAnimationFrame(step);
 }
+
 
 function disableGalleryNavAll(){
   const track = document.getElementById("galleryTrack");
