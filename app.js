@@ -1,3 +1,51 @@
+// === Force motion override (ignore OS-level reduced motion) ===
+;(function(){
+  try{
+    window.__FORCE_MOTION__ = true;
+    var root = document.documentElement;
+    if (!root.classList.contains('force-motion')) {
+      root.classList.add('force-motion');
+    }
+    var old = document.getElementById('force-motion-override');
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+
+    var st = document.createElement('style');
+    st.id = 'force-motion-override';
+    st.textContent = [
+      '.force-motion [data-fade-slide]{',
+      '  opacity:0 !important;',
+      '  transform: translateX(-24px) !important;',
+      '  transition: transform .6s cubic-bezier(.22,.61,.36,1), opacity .6s ease !important;',
+      '  will-change: transform, opacity;',
+      '}',
+
+      '.force-motion [data-fade-slide].is-in{',
+      '  opacity:1 !important;',
+      '  transform:none !important;',
+      '}',
+
+      '.force-motion .bio-media.is-in{ transition-delay:.05s !important; }',
+      '.force-motion .bio-text.is-in{  transition-delay:.15s !important; }',
+
+      '@media (prefers-reduced-motion: reduce){',
+      '  .force-motion [data-fade-slide]{',
+      '    opacity:0 !important;',
+      '    transform: translateX(-24px) !important;',
+      '    transition: transform .6s cubic-bezier(.22,.61,.36,1), opacity .6s ease !important;',
+      '  }',
+      '  .force-motion [data-fade-slide].is-in{',
+      '    opacity:1 !important;',
+      '    transform:none !important;',
+      '  }',
+      '  .force-motion .card.post, .force-motion .blog-accordion{',
+      '    transition: transform .18s ease, box-shadow .18s ease !important;',
+      '  }',
+      '}'
+    ].join('\n');
+    document.head.appendChild(st);
+  }catch(e){ /* no-op */ }
+})();
+
 // ===== i18n strings =====
 const STRINGS = {
   ja: {
@@ -225,7 +273,7 @@ function stopMarquee(wrap){
 // --- 無限ループ: 右→左、右から新規が流入。 ---
 function startMarquee(track, wrap){
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce) return;
+  if (reduce && !window.__FORCE_MOTION__) return;
 
   stopMarquee(wrap);
 
@@ -380,8 +428,8 @@ function disableGalleryNavAll(){
     a.setAttribute("aria-disabled","true");
     a.setAttribute("role","presentation");
     a.setAttribute("tabindex","-1");
+    // keep href; clicks are blocked via CSS/JS
 
-    a.removeAttribute("href");
 
     const block = (e) => { e.preventDefault(); e.stopPropagation(); };
     a.addEventListener("click", block, { passive:false });
