@@ -204,7 +204,9 @@ function renderGallery(){
 });
 
   startMarquee(track, wrap);
-  disableGalleryNavAll();
+  
+  setupGalleryNav(wrap, track);
+disableGalleryNavAll();
 }
 
 // ===== Gallery Marquee: stop current loop if any =====
@@ -234,6 +236,7 @@ function startMarquee(track, wrap){
   const gap = parseFloat(cs.gap || cs.columnGap || "12") || 12;
 
   let paused = false;
+  let jumping = false; // ← 連打防止＆アニメ中は停止
   const pause = () => { paused = true;  wrap.classList.add("is-paused"); };
   const play  = () => { paused = false; wrap.classList.remove("is-paused"); };
 
@@ -258,18 +261,100 @@ function startMarquee(track, wrap){
   }
   ensureFilled(track, wrap);
 
+  // サブピクセル対応で幅を測る
+  const wRect = (el)=> el.getBoundingClientRect().width;
+
+  const measureFirstN = (n)=>{
+    let distance = 0; const nodes = [];
+    let cur = track.firstElementChild;
+    for(let i=0;i<n && cur;i++){
+      nodes.push(cur);
+      distance += wRect(cur) + gap;
+      cur = cur.nextElementSibling;
+    }
+    return { distance, nodes };
+  };
+  const measureLastN = (n)=>{
+    let distance = 0; const nodes = [];
+    let cur = track.lastElementChild;
+    for(let i=0;i<n && cur;i++){
+      nodes.push(cur);
+      distance += wRect(cur) + gap;
+      cur = cur.previousElementSibling;
+    }
+    return { distance, nodes };
+  };
+
+  function forceReflow(){ void track.offsetWidth; } // layout flush
+
+  function jumpBy(n){
+    if(!n || jumping) return;
+    jumping = true;
+    pause();
+
+    if(n > 0){
+      // → 次へ（左へ移動）
+      const { distance, nodes } = measureFirstN(n);
+
+      // 現在位置を確定してからアニメ開始
+      track.style.transition = 'none';
+      track.style.transform  = `translate3d(${offset}px,0,0)`;
+      forceReflow();
+
+      track.style.transition = 'transform 300ms ease';
+      offset -= distance;
+      track.style.transform = `translate3d(${offset}px,0,0)`;
+
+      const done = () => {
+        track.removeEventListener('transitionend', done);
+        track.style.transition = 'none';
+        nodes.forEach(nd => track.appendChild(nd));
+        offset += distance;
+        track.style.transform = `translate3d(${offset}px,0,0)`;
+        forceReflow();
+        jumping = false;
+        if(!wrap.matches(':hover')) setTimeout(play, 60);
+      };
+      track.addEventListener('transitionend', done, { once:true });
+
+    }else{
+      const cnt = Math.abs(n);
+      const { distance, nodes } = measureLastN(cnt);
+
+      nodes.reverse().forEach(nd => track.insertBefore(nd, track.firstElementChild));
+
+      track.style.transition = 'none';
+      offset -= distance;
+      track.style.transform = `translate3d(${offset}px,0,0)`;
+      forceReflow();
+
+      // 右へ戻るアニメ
+      track.style.transition = 'transform 300ms ease';
+      offset += distance;
+      track.style.transform = `translate3d(${offset}px,0,0)`;
+
+      const done = () => {
+        track.removeEventListener('transitionend', done);
+        track.style.transition = 'none';
+        jumping = false;
+        if(!wrap.matches(':hover')) setTimeout(play, 60);
+      };
+      track.addEventListener('transitionend', done, { once:true });
+    }
+  }
+
   function step(ts){
     if(!lastTs) lastTs = ts;
     let dt = (ts - lastTs) / 1000;
-    if (dt > 1/30) dt = 1/60; 
+    if (dt > 1/30) dt = 1/60;
     lastTs = ts;
 
-    if(!paused){
+    if(!paused && !jumping){
       offset -= speed * dt;
 
       let first = track.firstElementChild;
       while(first){
-        const w = first.offsetWidth; 
+        const w = first.getBoundingClientRect().width;
         if(-offset >= w + gap){
           offset += w + gap;
           track.appendChild(first);
@@ -279,10 +364,10 @@ function startMarquee(track, wrap){
       track.style.transform = `translate3d(${offset}px,0,0)`;
     }
     const rafId = requestAnimationFrame(step);
-    wrap.__marquee.rafId = rafId; 
+    wrap.__marquee.rafId = rafId;
   }
 
-  wrap.__marquee = { rafId: 0, pause, play, onVis };
+  wrap.__marquee = { rafId: 0, pause, play, onVis, jump: jumpBy };
   requestAnimationFrame(step);
 }
 
@@ -504,7 +589,6 @@ function renderBlogCard(b) {
 
   const title   = esc(b.title[state.lang] || "");
   const excerpt = esc(b.excerpt?.[state.lang] || "");
-  // 長文本文（リッチテキスト可。なければ抜粋を使う）
   const content = renderRichText(b.content?.[state.lang] || b.excerpt?.[state.lang] || "");
 
   const coverImg = b.cover
@@ -551,9 +635,8 @@ function sanitize(html){
   return div.innerHTML;
 }
 
-// 改行→段落に変換しつつ、上のsanitizeも通す
+
 function renderRichText(textOrHtml){
-  // ユーザーが <p> などを直接書く場合はそのまま、素のテキストなら段落化
   const looksHtml = /<\/?[a-z][\s\S]*>/i.test(textOrHtml || "");
   const html = looksHtml
     ? textOrHtml
@@ -667,4 +750,25 @@ function setupBioAnimation(){
 
   targets.forEach(t => io.observe(t));
   __bioInit = true;
+}
+
+
+function setupGalleryNav(wrap, track){
+  if(!wrap || !track) return;
+  const prev = wrap.querySelector('.marquee-nav.prev');
+  const next = wrap.querySelector('.marquee-nav.next');
+
+  // 画像のジャンプ数切替（スマホ, それ以外）
+  const getJump = () => (window.matchMedia('(max-width:520px)').matches ? 1 : 1);
+
+  if(prev){
+    prev.addEventListener('click', () => {
+      wrap.__marquee?.jump?.(-getJump());
+    });
+  }
+  if(next){
+    next.addEventListener('click', () => {
+      wrap.__marquee?.jump?.( getJump());
+    });
+  }
 }
