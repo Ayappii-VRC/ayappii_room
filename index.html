@@ -107,10 +107,12 @@
       <section class="list-section style-block" data-section="videos">
         <h3 class="section-title" data-i18n="videosHeading">動画</h3>
         <div id="videoList" class="grid"></div>
-  
-        <div id="videoMoreWrap" class="load-more-wrap" hidden>
-          <button id="videoMoreBtn" class="load-more-btn" type="button" data-i18n="loadMore">もっと見る</button>
-        </div>
+
+        <div id="videoPager" class="pager" hidden>
+        <button id="videoPrev" class="pager-btn" type="button" data-i18n="prev">前へ</button>
+        <span id="videoPageInfo" aria-live="polite">1 / 1</span>
+        <button id="videoNext" class="pager-btn" type="button" data-i18n="next">次へ</button>
+      </div>
       </section>
 
       <!-- Blog -->
