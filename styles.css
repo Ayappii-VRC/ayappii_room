@@ -225,7 +225,7 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
 .marquee-track{
   display:flex; gap:12px; align-items:center;
   width:max-content;
-  transform: translateX(0);           /* JSで更新 */
+  transform: translate3d(0,0,0);        
   will-change: transform;
 }
 
