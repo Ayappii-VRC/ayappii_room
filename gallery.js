@@ -1,15 +1,15 @@
 window.GALLERY = [
-    { href: "https://drive.google.com/file/d/1GmiQW_aQ39y_uQHQ32kfQpydYpzwZyah/view?usp=sharing", alt: "1" },
-  { href: "https://drive.google.com/file/d/1odw_T9_WQqHZk4yzQvGn7mY3Qm3T_Dym/view?usp=sharing", alt: "2" },
+    { href: "https://drive.google.com/file/d/1TC1gLXKuYYBUnNZ0izHaZeDEsF6YLenT/view?usp=drive_link", alt: "1" },
+  { href: "https://drive.google.com/file/d/1zZrV9qv5Uk7FBlgY_dDf2klpEeDsku8E/view?usp=drive_link", alt: "2" },
   { href: "https://drive.google.com/file/d/1u-orPZcgxjARaHl5MoFL_SfCBF_1BHsg/view?usp=sharing", alt: "3" },
   { href: "https://drive.google.com/file/d/1JFmcgU2TFlz8pm_2fsFjkboXdvIOS-9T/view?usp=sharing", alt: "4" },
   { href: "https://drive.google.com/file/d/1oWO2-UR76IhuKJEie7qbPvsLtfDXODrQ/view?usp=sharing", alt: "5" },
-  { href: "https://drive.google.com/file/d/11pJE05MckrEHr6ykkgkNJs2HM8oy_DrU/view?usp=sharing", alt: "6" },
+  { href: "https://drive.google.com/file/d/1WAYbB0KLeNZd-ciFUK2fPs0mcmYo16At/view?usp=drive_link", alt: "6" },
   { href: "https://drive.google.com/file/d/1pzOCAUR2I3y0R6oH0ozhKJbzjK6dd3XU/view?usp=sharing", alt: "7" },
   { href: "https://drive.google.com/file/d/1fWdrhJWGLMT7NBT7IFbBkG9o4dijZG3a/view?usp=sharing", alt: "8" },
   { href: "https://drive.google.com/file/d/1c2ireVQCm1okJGjK7fq4644VZMKzNMIO/view?usp=sharing", alt: "9" },
   { href: "https://drive.google.com/file/d/1P1RYzmfaJ0A15HIzs9piylJwA8bh_3Um/view?usp=sharing", alt: "10" },
-  { href: "https://drive.google.com/file/d/15vVuXwV0rofyYzvslni0q9YIwQGThcTn/view?usp=drive_link", alt: "11" },
+  { href: "https://drive.google.com/file/d/1Y9aS6xF_RIZUCVwYpo_Yj4sJdfMlNEi9/view?usp=drive_link", alt: "11" },
   { href: "https://drive.google.com/file/d/1HJwfT1UcsUTA6CWL3CA-EnZG2VKhILoh/view?usp=drive_link", alt: "12" },
   { href: "https://drive.google.com/file/d/1sWS70JbBEo8rQNw3JajJpbguJCugeIE4/view?usp=drive_link", alt: "13" },
   { href: "https://drive.google.com/file/d/1ANvMjUzETNF5chIRUOvPyEPiBUVb0JvQ/view?usp=drive_link", alt: "14" },
@@ -22,6 +22,8 @@ window.GALLERY = [
   { href: "https://drive.google.com/file/d/15FExzLFZEGxSZ9IvWbS3mwXdKVDH0fbV/view?usp=drive_link", alt: "21" },
   { href: "https://drive.google.com/file/d/1v_fjabc_LNTJf3ykyIP3bHrTkJex145E/view?usp=drive_link", alt: "22" },
   { href: "https://drive.google.com/file/d/1FnjmLzyZOXCTJKtnZwbL5_LGIVWt1dFp/view?usp=drive_link", alt: "23" },
+  { href: "https://drive.google.com/file/d/1CPk0y-Oz2xmtsEXNGPgZbF9-aU7wvXYP/view?usp=drive_link", alt: "24" },
+  { href: "https://drive.google.com/file/d/1Mn4JNIlyIzq66GRUWvdMJPalbrcn9PbH/view?usp=drive_link", alt: "25" },
   //{ href: "", alt: "" },
 
 
