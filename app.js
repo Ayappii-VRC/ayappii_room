@@ -26,9 +26,7 @@ const STRINGS = {
     postedOn: "投稿日",
     readMore: "続きを読む",
     noResults: "該当のものがありません",
-    footerNote: "何事も楽しく！"
-    
-    
+    footerNote: "何事も楽しく！",
   },
   en: {
     introGreeting: "gm!",
@@ -57,6 +55,8 @@ const STRINGS = {
     footerNote: "life is not colorful, life is coloring"
   }
 };
+STRINGS.ja.loadMore = "もっと見る";
+STRINGS.en.loadMore = "Load more";
 
 const TAG_LABELS = {
   ja: { Archive: "アーカイブ", Other: "その他", ASL: "ASL", JSL: "JSL" },
@@ -202,6 +202,7 @@ function renderGallery(){
 });
 
   startMarquee(track, wrap);
+  disableGalleryNavAll();
 }
 
 // --- 無限ループ: 右→左、右から新規が流入。 ---
@@ -263,6 +264,27 @@ function startMarquee(track, wrap){
   requestAnimationFrame(step);
 }
 
+function disableGalleryNavAll(){
+  const track = document.getElementById("galleryTrack");
+  if(!track) return;
+
+  track.querySelectorAll(".marquee-item a").forEach(a => {
+    a.setAttribute("aria-disabled","true");
+    a.setAttribute("role","presentation");
+    a.setAttribute("tabindex","-1");
+
+    a.removeAttribute("href");
+
+    const block = (e) => { e.preventDefault(); e.stopPropagation(); };
+    a.addEventListener("click", block, { passive:false });
+    a.addEventListener("auxclick", block, { passive:false });  // 中クリック等
+    a.addEventListener("keydown", (e) => {
+      if(e.key === "Enter" || e.key === " ") block(e);
+    }, { passive:false });
+  });
+}
+
+const mqMobile = window.matchMedia('(max-width: 520px)');
 
 // ===== state / helpers =====
 const safeLang = (v) => (v === "ja" || v === "en" ? v : "ja");
@@ -272,8 +294,17 @@ const state = {
   query: "",
   sort: "date-desc",
   type: "all",
-  tags: new Set()
+  tags: new Set(),
+  isMobile: mqMobile.matches, 
+  videoVisibleCount: mqMobile.matches ? 2 : Infinity 
 };
+(mqMobile.addEventListener ? mqMobile.addEventListener('change', onMQ)
+                           : mqMobile.addListener(onMQ));
+function onMQ(e){
+  state.isMobile = e.matches;
+  state.videoVisibleCount = state.isMobile ? 2 : Infinity;
+  renderAll();
+}
 
 const $  = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -316,8 +347,9 @@ const ytEmbed = (u) => {
 // ===== render =====
 function renderAll() {
   applyI18n();
-  const vWrap = $("#videoList");
-  const bWrap = $("#blogList");
+
+  const vWrap = document.querySelector("#videoList");
+  const bWrap = document.querySelector("#blogList");
   if (!vWrap || !bWrap) {
     console.warn("[renderAll] 必要なコンテナが見つかりません。", {
       hasVideoList: !!vWrap, hasBlogList: !!bWrap
@@ -325,19 +357,48 @@ function renderAll() {
     return;
   }
 
-  const vData = getVideosSource().filter(matchesFilters).sort((a,b)=>compareBy(a,b,state.sort,state.lang));
+  const vDataAll = getVideosSource()
+    .filter(matchesFilters)
+    .sort((a,b)=>compareBy(a,b,state.sort,state.lang));
+
+  const total = vDataAll.length;
+  const limit = state.isMobile ? state.videoVisibleCount : total;
+  const vData = vDataAll.slice(0, limit);
+
   vWrap.innerHTML = vData.length
-  ? vData.map(renderVideoCard).join("")
-  : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults)}</div>`;
-  
+    ? vData.map(renderVideoCard).join("")
+    : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults)}</div>`;
 
-  const bData = getPostsSource().filter(matchesFilters).sort((a,b)=>compareBy(a,b,state.sort,state.lang));
+  const moreWrap = document.querySelector("#videoMoreWrap");
+const moreBtn  = document.querySelector("#videoMoreBtn");
+
+if (state.isMobile && state.videoVisibleCount > total) {
+  state.videoVisibleCount = total;
+}
+
+if (moreWrap && moreBtn) {
+  const hasMore = state.isMobile && limit < total;
+
+  moreWrap.hidden = !hasMore;
+  moreWrap.style.display = hasMore ? "" : "none";
+
+  if (hasMore) {
+    moreBtn.onclick = () => {
+      state.videoVisibleCount = Math.min(state.videoVisibleCount + 3, total);
+      renderAll();
+    };
+  } else {
+    moreBtn.onclick = null;
+  }
+}
+  const bData = getPostsSource()
+    .filter(matchesFilters)
+    .sort((a,b)=>compareBy(a,b,state.sort,state.lang));
   bWrap.innerHTML = bData.length
-  ? bData.map(renderBlogCard).join("")
-  : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults)}</div>`;
+    ? bData.map(renderBlogCard).join("")
+    : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults)}</div>`;
 
-  // fullscreen（ローカル video のみ）
-  $$(".video-wrap .fs").forEach((btn) => {
+  document.querySelectorAll(".video-wrap .fs").forEach((btn) => {
     btn.addEventListener("click", () => {
       const video = btn.closest(".video-wrap").querySelector("video");
       if (video?.requestFullscreen) video.requestFullscreen();
@@ -345,11 +406,12 @@ function renderAll() {
     });
   });
 
-  const yearEl = $("#year");
+  const yearEl = document.querySelector("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   renderGallery();
 }
+
 
 function renderVideoCard(v) {
   const posted  = STRINGS[state.lang].postedOn + ": " + fmtDate(v.datePosted, state.lang);
