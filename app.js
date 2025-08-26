@@ -55,8 +55,9 @@ const STRINGS = {
     footerNote: "life is not colorful, life is coloring"
   }
 };
-STRINGS.ja.loadMore = "もっと見る";
-STRINGS.en.loadMore = "Load more";
+STRINGS.ja.prev = "前へ";
+STRINGS.ja.next = "次へ";
+STRINGS.ja.pageSep = "／";
 
 const TAG_LABELS = {
   ja: { Archive: "アーカイブ", Other: "その他", ASL: "ASL", JSL: "JSL" },
@@ -285,6 +286,7 @@ function disableGalleryNavAll(){
 }
 
 const mqMobile = window.matchMedia('(max-width: 520px)');
+const PAGE_SIZE = 2; // スマホは常に2件だけ表示
 
 // ===== state / helpers =====
 const safeLang = (v) => (v === "ja" || v === "en" ? v : "ja");
@@ -295,14 +297,14 @@ const state = {
   sort: "date-desc",
   type: "all",
   tags: new Set(),
-  isMobile: mqMobile.matches, 
-  videoVisibleCount: mqMobile.matches ? 2 : Infinity 
+  isMobile: mqMobile.matches,
+  mobilePage: 0, // ← 今どの“2件セット”を表示しているか（0始まり）
 };
 (mqMobile.addEventListener ? mqMobile.addEventListener('change', onMQ)
                            : mqMobile.addListener(onMQ));
 function onMQ(e){
   state.isMobile = e.matches;
-  state.videoVisibleCount = state.isMobile ? 2 : Infinity;
+  state.mobilePage = 0; 
   renderAll();
 }
 
@@ -350,53 +352,77 @@ function renderAll() {
 
   const vWrap = document.querySelector("#videoList");
   const bWrap = document.querySelector("#blogList");
-  if (!vWrap || !bWrap) {
-    console.warn("[renderAll] 必要なコンテナが見つかりません。", {
-      hasVideoList: !!vWrap, hasBlogList: !!bWrap
-    });
-    return;
-  }
+  if (!vWrap || !bWrap) return;
 
+  // --- 動画：フィルタ＆ソート（全件）
   const vDataAll = getVideosSource()
     .filter(matchesFilters)
     .sort((a,b)=>compareBy(a,b,state.sort,state.lang));
 
   const total = vDataAll.length;
-  const limit = state.isMobile ? state.videoVisibleCount : total;
-  const vData = vDataAll.slice(0, limit);
+
+  // --- スマホは常に2件のみを“ページ送り”で表示、PCは全件
+  let vData = vDataAll;
+  let pageCount = 1;
+
+  if (state.isMobile) {
+    pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+    state.mobilePage = Math.max(0, Math.min(state.mobilePage, pageCount - 1));
+
+    const start = state.mobilePage * PAGE_SIZE;
+    const end   = start + PAGE_SIZE;
+    vData = vDataAll.slice(start, end);
+  }
 
   vWrap.innerHTML = vData.length
     ? vData.map(renderVideoCard).join("")
-    : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults)}</div>`;
+    : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults || "No videos")}</div>`;
 
-  const moreWrap = document.querySelector("#videoMoreWrap");
-const moreBtn  = document.querySelector("#videoMoreBtn");
+  // --- スマホ用ページャー（前/次）制御
+  const pager   = document.querySelector("#videoPager");
+  const prevBtn = document.querySelector("#videoPrev");
+  const nextBtn = document.querySelector("#videoNext");
+  const info    = document.querySelector("#videoPageInfo");
 
-if (state.isMobile && state.videoVisibleCount > total) {
-  state.videoVisibleCount = total;
-}
+  if (pager && prevBtn && nextBtn && info) {
+    const showPager = state.isMobile && total > PAGE_SIZE;
+    pager.hidden = !showPager;
 
-if (moreWrap && moreBtn) {
-  const hasMore = state.isMobile && limit < total;
+    if (showPager) {
+      prevBtn.textContent = STRINGS[state.lang].prev || "Prev";
+      nextBtn.textContent = STRINGS[state.lang].next || "Next";
+      const sep = STRINGS[state.lang].pageSep || "/";
 
-  moreWrap.hidden = !hasMore;
-  moreWrap.style.display = hasMore ? "" : "none";
+      info.textContent = `${state.mobilePage + 1}${sep}${pageCount}`;
 
-  if (hasMore) {
-    moreBtn.onclick = () => {
-      state.videoVisibleCount = Math.min(state.videoVisibleCount + 3, total);
-      renderAll();
-    };
-  } else {
-    moreBtn.onclick = null;
+      prevBtn.disabled = state.mobilePage <= 0;
+      nextBtn.disabled = state.mobilePage >= pageCount - 1;
+
+      prevBtn.onclick = () => {
+        if (state.mobilePage > 0) {
+          state.mobilePage -= 1;
+          renderAll();
+        }
+      };
+      nextBtn.onclick = () => {
+        if (state.mobilePage < pageCount - 1) {
+          state.mobilePage += 1;
+          renderAll();
+        }
+      };
+    } else {
+      prevBtn.onclick = null;
+      nextBtn.onclick = null;
+    }
   }
-}
+
   const bData = getPostsSource()
     .filter(matchesFilters)
     .sort((a,b)=>compareBy(a,b,state.sort,state.lang));
   bWrap.innerHTML = bData.length
     ? bData.map(renderBlogCard).join("")
-    : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults)}</div>`;
+    : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults || "No posts")}</div>`;
 
   document.querySelectorAll(".video-wrap .fs").forEach((btn) => {
     btn.addEventListener("click", () => {
