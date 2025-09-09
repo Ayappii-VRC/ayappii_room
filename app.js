@@ -639,8 +639,9 @@ function renderBlogCard(b) {
   const excerpt = esc(b.excerpt?.[state.lang] || "");
   const content = renderRichText(b.content?.[state.lang] || b.excerpt?.[state.lang] || "");
 
-  const coverImg = b.cover
-    ? `<img class="blog-cover" src="${esc(b.cover)}" alt="" decoding="async">`
+  const coverCandidates = b.cover ? buildDriveCandidates(b.cover) : null;
+  const coverImg = coverCandidates
+    ? `<img class="blog-cover" src="${esc(coverCandidates[0])}" alt="" decoding="async" loading="lazy">`
     : "";
 
   return `
@@ -661,7 +662,8 @@ function renderBlogCard(b) {
   `;
 }
 function sanitize(html){
-  const allowed = /^(p|br|strong|em|b|i|u|a|ul|ol|li|h3|h4|blockquote|code|pre)$/i;
+  // IMG / FIGURE / 見出しタグも許可
+  const allowed = /^(p|br|strong|em|b|i|u|a|ul|ol|li|h1|h2|h3|h4|h5|h6|blockquote|code|pre|img|figure|figcaption)$/i;
   const div = document.createElement('div');
   div.innerHTML = html;
 
@@ -669,14 +671,30 @@ function sanitize(html){
   const rm = [];
   while (walker.nextNode()) {
     const el = walker.currentNode;
+
     if (!allowed.test(el.tagName)) rm.push(el);
-    if (el.tagName === 'A') { // aタグは最低限だけ許可
+
+    if (el.tagName === 'A') {
       [...el.attributes].forEach(attr => {
         if (!['href','title','target','rel'].includes(attr.name)) el.removeAttribute(attr.name);
       });
       if (el.getAttribute('href')?.startsWith('javascript:')) el.removeAttribute('href');
       el.setAttribute('target','_blank');
       el.setAttribute('rel','noopener');
+    }
+
+    if (el.tagName === 'IMG') {
+      const keep = new Set(['src','alt','loading','decoding','referrerpolicy','draggable','width','height']);
+      [...el.attributes].forEach(attr => { if (!keep.has(attr.name)) el.removeAttribute(attr.name); });
+
+      const src = el.getAttribute('src') || '';
+      const candidates = (typeof buildDriveCandidates === 'function') ? buildDriveCandidates(src) : [src];
+      if (candidates && candidates[0]) el.setAttribute('src', candidates[0]);
+
+      if (!el.getAttribute('loading')) el.setAttribute('loading','lazy');
+      el.setAttribute('referrerpolicy','no-referrer');
+      el.removeAttribute('onerror'); // インラインJS防止
+      el.removeAttribute('style');
     }
   }
   rm.forEach(n => n.replaceWith(...n.childNodes));
@@ -799,7 +817,6 @@ function setupBioAnimation(){
   targets.forEach(t => io.observe(t));
   __bioInit = true;
 }
-
 
 function setupGalleryNav(wrap, track){
   if(!wrap || !track) return;
