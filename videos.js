@@ -42,7 +42,7 @@ window.VIDEOS = [
   {
     id: "v6",
     title: { ja: "【限定公開・共有禁止】「手話技能検定４級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
-    datePosted: "2025-09-09",
+    datePosted: "2025-09-08",
     tags: ["Archive"],
     caption: { ja: "【Youtubeの詳細読んでね】【担当】あやっぴ【クイズ】ユウ・エスナ・あやっぴ【通訳】ユウ", en: "【Plz read youtube caption】Host: Ayappii | Quiz: Yu/Esna/Ayappii | Translator: Yu" },
     src: "https://youtu.be/Dp8cjJB8XXk"
