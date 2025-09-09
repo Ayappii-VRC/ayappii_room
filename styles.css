@@ -580,3 +580,58 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
 @media (max-width:520px){
   .marquee-nav{ width:36px; height:36px; font-size:16px; }
 }
+
+/* === Force motion override === */
+.force-motion [data-fade-slide]{
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: transform .6s cubic-bezier(.22,.61,.36,1), opacity .6s ease !important;
+}
+.force-motion .card.post,
+.force-motion .blog-accordion{
+  transition: transform .18s ease, box-shadow .18s ease !important;
+}
+
+/* Blog本文の見出しをタイトルっぽく大きく */
+.blog-accordion .blog-body h1,
+.blog-accordion .blog-body h2{
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 1em 0 .6em;
+}
+.blog-accordion .blog-body h3{
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: .9em 0 .45em;
+}
+
+/* 本文中の画像をきれいに表示 */
+.blog-accordion .blog-body img{
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: .6em 0;
+}
+/* 画像＋キャプション */
+.blog-accordion .blog-body figure {
+  margin: .75em 0;
+}
+.blog-accordion .blog-body figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+.blog-accordion .blog-body figcaption {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: center;
+  color: #6b7280; /* gray-500 */
+  margin-top: .45em;
+  opacity: .95;
+}
+
+
