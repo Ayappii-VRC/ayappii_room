@@ -4,16 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ayappii Room</title>
+
+    <!-- Fonts / Styles -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" href="assets/icon.png" />
   </head>
+
   <body>
+    <!-- ===== Header ===== -->
     <header class="site-header">
       <div class="container header-inner">
         <h1 class="brand" data-i18n="siteTitle"></h1>
 
+        <!-- 言語スイッチ（app.jsのinitEventsがこのIDを見る） -->
         <div class="lang-switch" role="group" aria-label="Language switch">
           <button id="lang-ja" class="lang-btn active" aria-pressed="true">日本語</button>
           <button id="lang-en" class="lang-btn" aria-pressed="false">EN</button>
@@ -22,48 +27,46 @@
     </header>
 
     <main class="container">
-      <!-- === Bio / Profile Hero (NEW) === -->
-<section class="bio-hero" id="bio">
-  <div class="bio-panel">
-    <div class="bio-wrap">
-      <!-- 左：画像（横長の上に縦長がふわっと重なる） -->
-      <div class="bio-media" data-fade-slide>
-        <figure class="photo photo-horizontal">
-          <!-- 横長 -->
-          <img src="assets/icon.png" alt="Landscape photo" />
-        </figure>
-      </div>
+      <!-- ===== Bio / Profile Hero ===== -->
+      <section class="bio-hero" id="bio">
+        <div class="bio-panel">
+          <!-- ここを2カラム化：画像とBioの間の余白は grid-gap のみ -->
+          <div class="profile-grid">
+            <!-- 左：縦長プロフィール画像（パスは必要に応じて変更してね） -->
+            <div class="bio-media only-vertical" data-fade-slide>
+              <figure class="photo photo-vertical">
+                <img src="illustrate_icon.jpg" alt="Ayappii のプロフィール画像" />
+              </figure>
+            </div>
 
-      <!-- 右：テキスト（既存の文言を転用） -->
-      <div class="bio-text" data-fade-slide>
-        <h2 class="bio-title" data-i18n="introGreeting"></h2>
-        <p class="bio-desc" data-i18n="introBody"></p>
+            <!-- 右：Bioテキスト -->
+            <div class="bio-text" data-fade-slide>
+              <h2 class="bio-title" data-i18n="introGreeting"></h2>
+              <p class="bio-desc" data-i18n="introBody"></p>
 
-        <!-- バッジ（お好みで） -->
-        <ul class="bio-tags">
-          <li>JSL: <span data-i18n="levelJSL">日本手話</span></li>
-          <li>ASL: <span data-i18n="levelASL">アメリカ手話</span></li>
-        </ul>
+              <ul class="bio-tags">
+                <li>JSL: <span data-i18n="levelJSL">日本手話</span></li>
+                <li>ASL: <span data-i18n="levelASL">アメリカ手話</span></li>
+              </ul>
 
-        <!-- ソーシャル（元のリンクを転用） -->
-        <nav class="profile-links" aria-label="Social links">
-          <a class="plink x" href="https://x.com/froppii_" target="_blank" rel="noopener" aria-label="X">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path d="M18.244 2H21l-6.51 7.44L22.5 22h-6.91l-4.49-5.88L5.8 22H3l7.05-8.05L1.5 2h6.91l4.14 5.42L18.244 2Zm-1.21 18.03h1.91L7.03 3.97H5.12l11.914 16.06Z" />
-            </svg>
-          </a>
-          <a class="plink yt" href="https://youtube.com/@ayappii_vrc?si=veligkgomXhBy2HE" target="_blank" rel="noopener" aria-label="YouTube">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.75 15.5v-7l6.5 3.5-6.5 3.5Z"/>
-            </svg>
-          </a>
-        </nav>
-      </div>
-    </div>
-  </div>
-</section>
+              <nav class="profile-links" aria-label="Social links">
+                <a class="plink x" href="https://x.com/froppii_" target="_blank" rel="noopener" aria-label="X">
+                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                    <path d="M18.244 2H21l-6.51 7.44L22.5 22h-6.91l-4.49-5.88L5.8 22H3l7.05-8.05L1.5 2h6.91l4.14 5.42L18.244 2Zm-1.21 18.03h1.91L7.03 3.97H5.12l11.914 16.06Z" />
+                  </svg>
+                </a>
+                <a class="plink yt" href="https://youtube.com/@ayappii_vrc?si=veligkgomXhBy2HE" target="_blank" rel="noopener" aria-label="YouTube">
+                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.75 15.5v-7l6.5 3.5-6.5 3.5Z"/>
+                  </svg>
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <!-- Controls -->
+      <!-- ===== Toolbar（検索/並び替え/種類/タグ） ===== -->
       <section class="toolbar card">
         <div class="toolbar-row">
           <label class="field">
@@ -103,44 +106,49 @@
         </div>
       </section>
 
-      <!-- Videos -->
+      <!-- ===== Videos ===== -->
       <section class="list-section style-block" data-section="videos">
         <h3 class="section-title" data-i18n="videosHeading">動画</h3>
         <div id="videoList" class="grid"></div>
 
+        <!-- ページャー（app.jsはモバイルで使用：Prev/Next + 1/N） -->
         <div id="videoPager" class="pager" hidden>
-        <button id="videoPrev" class="pager-btn" type="button" data-i18n="prev">前へ</button>
-        <span id="videoPageInfo" aria-live="polite">1 / 1</span>
-        <button id="videoNext" class="pager-btn" type="button" data-i18n="next">次へ</button>
-      </div>
+          <button id="videoPrev" class="pager-btn" type="button" data-i18n="prev">前へ</button>
+          <!-- PC用の番号タブを使う場合は #videoPageNums をCSS/JSで表示制御してください -->
+          <div id="videoPageNums" class="page-nums" aria-label="Pages"></div>
+          <span id="videoPageInfo" aria-live="polite">1 / 1</span>
+          <button id="videoNext" class="pager-btn" type="button" data-i18n="next">次へ</button>
+        </div>
       </section>
 
-      <!-- Blog -->
+      <!-- ===== Blog ===== -->
       <section class="list-section style-block" data-section="blog">
         <h3 class="section-title" data-i18n="blogHeading">ブログ</h3>
         <div id="blogList" class="grid"></div>
       </section>
 
-      <!-- Gallery-->
+      <!-- ===== Gallery ===== -->
       <section class="list-section style-block" data-section="gallery">
-      <h3 class="section-title" data-i18n="galleryHeading">ギャラリー</h3>
+        <h3 class="section-title" data-i18n="galleryHeading">ギャラリー</h3>
         <div class="marquee" aria-label="photo gallery">
           <button type="button" class="marquee-nav prev" aria-label="前の画像">＜</button>
-    <button type="button" class="marquee-nav next" aria-label="次の画像">＞</button>
-    <ul id="galleryTrack" class="marquee-track" aria-hidden="true"></ul>
+          <button type="button" class="marquee-nav next" aria-label="次の画像">＞</button>
+          <ul id="galleryTrack" class="marquee-track" aria-hidden="true"></ul>
         </div>
       </section>
     </main>
 
+    <!-- ===== Footer ===== -->
     <footer class="site-footer">
       <div class="container">
         <small>&copy; <span id="year"></span> Ayappii • <span data-i18n="footerNote">何事も楽しく！</span></small>
       </div>
     </footer>
 
-<script src="gallery.js"></script>
-<script src="posts.js"></script>
-<script src="videos.js"></script>
-<script src="app.js"></script>
-</body>
+    <!-- ===== Scripts ===== -->
+    <script src="gallery.js"></script>
+    <script src="posts.js"></script>
+    <script src="videos.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
