@@ -3,7 +3,7 @@ window.VIDEOS = [
     id: "v1",
     title: { ja: "【紹介動画】ねぎ手話教室", en: "【PV】Negi Sign Language Class" },
     datePosted: "2025-08-17",
-    tags: ["Other"],
+    tags: ["JSL","Other"],
     caption: { ja: "手話教室をご紹介します！", en: "Introducing Sign Class in VRChat" },
     src: "https://youtu.be/yLaVVgxtzyg?si=TM4c2DUFxJu6H8GD"
   },
@@ -46,6 +46,14 @@ window.VIDEOS = [
     tags: ["Archive"],
     caption: { ja: "【Youtubeの詳細読んでね】【担当】あやっぴ【クイズ】ユウ・エスナ・あやっぴ【通訳】ユウ", en: "【Plz read youtube caption】Host: Ayappii | Quiz: Yu/Esna/Ayappii | Translator: Yu" },
     src: "https://youtu.be/Dp8cjJB8XXk"
+  },
+  {
+    id: "v7",
+    title: { ja: "【限定公開・共有禁止】「手話通訳士検定に向けて」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-09-16",
+    tags: ["Archive"],
+    caption: { ja: "【担当】ユウ", en: "Host: Yu" },
+    src: "https://youtu.be/t7NACUd65Dk"
   }
 
 ];
