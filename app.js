@@ -441,7 +441,8 @@ function disableGalleryNavAll(){
 }
 
 const mqMobile = window.matchMedia('(max-width: 520px)');
-const PAGE_SIZE = 2; // スマホは常に2件だけ表示
+const PAGE_SIZE_MOBILE  = 2;  // スマホ
+const PAGE_SIZE_DESKTOP = 6;  // PC
 
 // ===== state / helpers =====
 const safeLang = (v) => (v === "ja" || v === "en" ? v : "ja");
@@ -453,8 +454,24 @@ const state = {
   type: "all",
   tags: new Set(),
   isMobile: mqMobile.matches,
-  mobilePage: 0, // ← 今どの“2件セット”を表示しているか（0始まり）
+  mobilePage: 0,   // モバイル：2件ずつのページ番号
+  desktopPage: 0,  // デスクトップ：6件ずつのページ番号
 };
+// 現在ページの前後と先頭/末尾だけを出す“Google風”のページ番号配列を作る
+function buildPageList(count, cur){ // cur: 0-based
+  if (count <= 1) return [0];
+  const keep = new Set([0, count-1, cur-2, cur-1, cur, cur+1, cur+2]);
+  const nums = [...keep].filter(n => n >= 0 && n < count).sort((a,b)=>a-b);
+  const out = [];
+  let prev = -1;
+  for(const n of nums){
+    if (prev >= 0 && n - prev > 1) out.push('...');
+    out.push(n);
+    prev = n;
+  }
+  return out;
+}
+
 (mqMobile.addEventListener ? mqMobile.addEventListener('change', onMQ)
                            : mqMobile.addListener(onMQ));
 function onMQ(e){
@@ -515,63 +532,90 @@ function renderAll() {
     .sort((a,b)=>compareBy(a,b,state.sort,state.lang));
 
   const total = vDataAll.length;
+  const isM = state.isMobile;
+  const perPage = isM ? PAGE_SIZE_MOBILE : PAGE_SIZE_DESKTOP;
 
-  // --- スマホは常に2件のみを“ページ送り”で表示、PCは全件
-  let vData = vDataAll;
-  let pageCount = 1;
-
-  if (state.isMobile) {
-    pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
-
+  // 現在ページをクランプ
+  const pageCount = Math.max(1, Math.ceil(total / perPage));
+  if (isM) {
     state.mobilePage = Math.max(0, Math.min(state.mobilePage, pageCount - 1));
-
-    const start = state.mobilePage * PAGE_SIZE;
-    const end   = start + PAGE_SIZE;
-    vData = vDataAll.slice(start, end);
+  } else {
+    state.desktopPage = Math.max(0, Math.min(state.desktopPage, pageCount - 1));
   }
+
+  // 今ページのスライス
+  const curPage = isM ? state.mobilePage : state.desktopPage;
+  const start = curPage * perPage;
+  const end   = start + perPage;
+  const vData = vDataAll.slice(start, end);
 
   vWrap.innerHTML = vData.length
     ? vData.map(renderVideoCard).join("")
     : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults || "No videos")}</div>`;
 
-  // --- スマホ用ページャー（前/次）制御
+  // --- ページャー（モバイル＝前/次＋1/N、PC＝番号タブ＋前/次）
   const pager   = document.querySelector("#videoPager");
   const prevBtn = document.querySelector("#videoPrev");
   const nextBtn = document.querySelector("#videoNext");
   const info    = document.querySelector("#videoPageInfo");
+  const nums    = document.querySelector("#videoPageNums");
 
-  if (pager && prevBtn && nextBtn && info) {
-    const showPager = state.isMobile && total > PAGE_SIZE;
-    pager.hidden = !showPager;
+  const showPager = total > perPage;
+  if (pager) pager.hidden = !showPager;
 
-    if (showPager) {
-      prevBtn.textContent = STRINGS[state.lang].prev || "Prev";
-      nextBtn.textContent = STRINGS[state.lang].next || "Next";
-      const sep = STRINGS[state.lang].pageSep || "/";
+  if (showPager && prevBtn && nextBtn) {
+    prevBtn.textContent = STRINGS[state.lang].prev || "Prev";
+    nextBtn.textContent = STRINGS[state.lang].next || "Next";
 
-      info.textContent = `${state.mobilePage + 1}${sep}${pageCount}`;
+    prevBtn.disabled = curPage <= 0;
+    nextBtn.disabled = curPage >= pageCount - 1;
 
-      prevBtn.disabled = state.mobilePage <= 0;
-      nextBtn.disabled = state.mobilePage >= pageCount - 1;
-
-      prevBtn.onclick = () => {
-        if (state.mobilePage > 0) {
-          state.mobilePage -= 1;
-          renderAll();
-        }
-      };
-      nextBtn.onclick = () => {
-        if (state.mobilePage < pageCount - 1) {
-          state.mobilePage += 1;
-          renderAll();
-        }
-      };
-    } else {
-      prevBtn.onclick = null;
-      nextBtn.onclick = null;
-    }
+    prevBtn.onclick = () => {
+      if (isM) {
+        if (state.mobilePage > 0) { state.mobilePage -= 1; renderAll(); }
+      } else {
+        if (state.desktopPage > 0) { state.desktopPage -= 1; renderAll(); }
+      }
+    };
+    nextBtn.onclick = () => {
+      if (isM) {
+        if (state.mobilePage < pageCount - 1) { state.mobilePage += 1; renderAll(); }
+      } else {
+        if (state.desktopPage < pageCount - 1) { state.desktopPage += 1; renderAll(); }
+      }
+    };
   }
 
+  // モバイル：1 / N 表示
+  if (info) {
+    const sep = STRINGS[state.lang].pageSep || "/";
+    info.textContent = `${curPage + 1}${sep}${pageCount}`;
+  }
+
+  // PC：番号タブ（Google風）
+  if (!isM && nums) {
+    const list = buildPageList(pageCount, curPage);
+    nums.innerHTML = list.map(p => {
+      if (p === '...') return `<span class="page-ellipsis">…</span>`;
+      const cur = (p === curPage) ? ` aria-current="page"` : "";
+      return `<button class="page-btn"${cur} data-page="${p}" aria-label="Page ${p+1}">${p + 1}</button>`;
+    }).join("");
+
+    nums.querySelectorAll(".page-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const p = parseInt(btn.getAttribute("data-page"), 10);
+        if (!Number.isNaN(p)) {
+          state.desktopPage = p;
+          renderAll();
+        }
+      });
+    });
+  } else if (nums) {
+    // モバイルでは番号タブは空に
+    nums.innerHTML = "";
+  }
+
+  // --- ブログ
   const bData = getPostsSource()
     .filter(matchesFilters)
     .sort((a,b)=>compareBy(a,b,state.sort,state.lang));
@@ -579,6 +623,7 @@ function renderAll() {
     ? bData.map(renderBlogCard).join("")
     : `<div class="empty-state" role="status">${esc(STRINGS[state.lang].noResults || "No posts")}</div>`;
 
+  // フルスクリーンボタン（ローカルMP4のみ）
   document.querySelectorAll(".video-wrap .fs").forEach((btn) => {
     btn.addEventListener("click", () => {
       const video = btn.closest(".video-wrap").querySelector("video");
@@ -592,6 +637,7 @@ function renderAll() {
 
   renderGallery();
 }
+
 
 
 function renderVideoCard(v) {
