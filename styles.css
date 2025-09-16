@@ -547,11 +547,6 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
 .pager-btn:disabled{ opacity:.45; cursor:not-allowed; }
 .pager[hidden]{ display:none !important; }
 
-@media (min-width: 521px){
-  .pager{ display:none; }
-}
-
-
 
 /* --- Gallery nav buttons (透明＆丸ボタン) --- */
 .marquee-nav{
@@ -634,4 +629,188 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
   opacity: .95;
 }
 
+/* ---- Desktop用の番号タブ ---- */
+.page-nums{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+/* 既存の .pager-btn と同じ見た目を .page-btn にも適用 */
+.pager-btn,
+.page-btn{
+  appearance:none;
+  border:1px solid #ccd3c0;
+  background:#fff;
+  color:var(--moss-ink);
+  font-weight:700;
+  padding:8px 12px;
+  border-radius:999px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+/* 現在ページをハイライト */
+.page-btn[aria-current="page"]{
+  background:var(--moss);
+  color:#fff;
+  border-color:var(--moss);
+}
+
+/* 省略記号 */
+.page-ellipsis{
+  padding:0 4px;
+  color:var(--muted);
+}
+
+/* モバイルでは番号タブを隠し、PCでは 1/N を隠す */
+@media (max-width:520px){
+  .page-nums{ display:none; }
+}
+@media (min-width:521px){
+  #videoPageInfo{ display:none; }
+}
+/* --- 縦長だけで使うときのレイアウト --- */
+.bio-media.only-vertical{
+  min-height:auto;            /* 不要な余白をリセット */
+  display:flex; align-items:center;
+}
+.bio-media.only-vertical .photo-vertical{
+  position:static;            /* 絶対配置→通常フローへ */
+  transform:none;
+  width:clamp(200px, 34%, 360px);  /* デスクトップで程よい幅 */
+  border-radius:14px;         /* ちょい大きめの角丸に */
+  background:#eef2ea; border:1px solid #dfe8ce;
+  box-shadow:0 18px 30px -18px rgba(0,0,0,.22);
+}
+.bio-media.only-vertical .photo-vertical img{
+  width:100%; height:auto; display:block; /* 画像はトリミングなしでフィット */
+}
+
+/* モバイル最適化：少し大きく見せる */
+@media (max-width:520px){
+  .bio-media.only-vertical .photo-vertical{ width:60%; }
+}
+
+/* === Profile compact layout: Bioと画像の間の余白を最小化 === */
+.profile-grid{
+  display: grid;
+  /* 画像 | Bio（画像は最小240〜最大360px、残りがBio） */
+  grid-template-columns: minmax(240px, 360px) 1fr;
+  align-items: center;
+  /* ここだけで余白を管理：大きすぎない自動調整 */
+  gap: clamp(12px, 4vw, 28px);
+}
+
+/* Bio側の不要な上下マージンを抑制（段落は詰めすぎない） */
+.profile-grid .bio{ margin: 0; }
+.profile-grid .bio > *{ margin-block: 0.25rem 0.75rem; }
+.profile-grid .bio > *:first-child{ margin-top: 0; }
+.profile-grid .bio > *:last-child{ margin-bottom: 0; }
+
+/* 2カラム。画像列は固定幅、Bioは残り全部 */
+.profile-grid{
+  display:grid;
+  grid-template-columns: minmax(220px, 280px) 1fr; 
+  align-items:center;
+  column-gap: clamp(12px, 2.8vw, 20px);           /* ←ここだけで余白を管理 */
+}
+
+/* 画像側：幅を明示して、以前の%指定などを上書き */
+.profile-grid .bio-media{
+  width: clamp(220px, 26vw, 280px);
+  margin:0;
+}
+.profile-grid .photo-vertical{
+  position: static !important; 
+  transform: none !important;
+  width: 100% !important;     
+  max-width: none;
+}
+
+/* 画像の“縁取り”と“内側の余白（マット）” */
+.profile-grid .photo-vertical{
+  padding: 10px;                      
+}
+.profile-grid .photo-vertical img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 12px;         
+}
+
+/* Bio側の余白を詰める（大きなmarginがあればリセット） */
+.profile-grid .bio-text{ margin:0; }
+.profile-grid .bio-text > *{ margin-block: .25rem .75rem; }
+.profile-grid .bio-text > *:first-child{ margin-top: 0; }
+.profile-grid .bio-text > *:last-child{  margin-bottom: 0; }
+
+/* スマホは縦並びに */
+@media (max-width: 720px){
+  .profile-grid{
+    grid-template-columns: 1fr;
+    column-gap: 16px;
+    row-gap: 16px;
+  }
+  .profile-grid .bio-media{ width: 70%; margin-inline:auto; }
+}
+
+/* もし以前の「34%」など幅指定が残っていた場合の保険で強制上書き */
+.bio-media.only-vertical .photo-vertical{ width: 100% !important; }
+
+/* ===== Bio（テキスト側）に枠＆マットを付ける ===== */
+.profile-grid .bio-text{
+  /* 枠の中に少し余白＝「内側マージン」は padding で表現 */
+  padding: clamp(40px, 2.2vw, 40px);              
+  border-radius: 16px;
+
+  /* 中身の縦詰めは既存どおり */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;  
+}
+
+.profile-grid .bio-text > *{ margin-block: .25rem .75rem; }
+.profile-grid .bio-text > *:first-child{ margin-top: 0; }
+.profile-grid .bio-text > *:last-child{  margin-bottom: 0; }
+
+@media (max-width: 720px){
+  .profile-grid .bio-text{
+    padding: 22px 24px;
+    border-radius: 14px;
+    box-shadow:
+      0 0 0 4px #742b2b,
+      0 10px 24px -16px rgba(0,0,0,.16);
+  }
+}
+/* 親カード（下の白い枠）：角丸内に中身の影を収める */
+.bio-hero .bio-panel{
+  position: relative;
+  border-radius: 20px;               
+  padding: clamp(16px, 2.6vw, 28px); 
+  overflow: hidden;            
+}
+
+/* 念のため、ProfileGrid 自体のはみ出しを防止 */
+.profile-grid{
+  margin: 0;                 
+  max-width: 100%;
+}
+
+.profile-grid .photo-vertical,
+.profile-grid .bio-text{
+  box-shadow:
+    0 0 0 5px #f6f9f1,              /* ふちどり（6px→5pxなど軽く） */
+    0 12px 28px -16px rgba(0,0,0,.18);
+}
+
+/* いちおう下端だけ当たりやすいので、下パディングを少し増量（任意） */
+.bio-hero .bio-panel{ padding-bottom: clamp(20px, 3.2vw, 36px); }
+
+/* 親カードの角丸と中の角丸が干渉して見える場合は、内側を少し小さく */
+.profile-grid .photo-vertical,
+.profile-grid .bio-text{
+  border-radius: 16px;
+}
 
