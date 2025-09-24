@@ -54,6 +54,14 @@ window.VIDEOS = [
     tags: ["Archive"],
     caption: { ja: "【担当】ユウ", en: "Host: Yu" },
     src: "https://youtu.be/t7NACUd65Dk"
+  },
+  {
+    id: "v8",
+    title: { ja: "【限定公開・共有禁止】「全国手話検定５級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-09-22",
+    tags: ["Archive"],
+    caption: { ja: "【担当】えすな【通訳】ユウ【クイズ】えすな、ユウ、ちろる、あやっぴ", en: "Host: Esna|Translator:Yu|Quiz:Esna,Yu,Chiroru,Ayappii" },
+    src: "https://youtu.be/Z7Uyr4uBLrc"
   }
 
 ];
