@@ -75,6 +75,11 @@ const STRINGS = {
     readMore: "続きを読む",
     noResults: "該当のものがありません",
     footerNote: "何事も楽しく！",
+    languageLabel: "言語：",
+    statusLabel: "ステータス：",
+    status1: "手話イベント主催中。誰でもおいで！",
+    status2: "手話べりしているよ。",
+    status3: "そっとしておいてね...!",
   },
   en: {
     introGreeting: "gm!",
@@ -100,7 +105,12 @@ const STRINGS = {
     postedOn: "Posted",
     readMore: "Read more",
     noResults: "No matching items.",
-    footerNote: "life is not colorful, life is coloring"
+    footerNote: "life is not colorful, life is coloring",
+    languageLabel: "Language:",
+    statusLabel: "Status:",
+    status1: "Hosting JSL event atm- Hop in!!",
+    status2: "chilling out",
+    status3: "dont mind me, just need little break"
   }
 };
 STRINGS.ja.prev = "前へ";
