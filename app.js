@@ -841,7 +841,7 @@ function setLang(lang) {
 
 // ===== init =====
 function init() {
-  if (!localStorage.getItem("lang")) localStorage.setItem("lang", "ja");
+  setLang("ja");   
   initEvents();
   renderAll(); // ← 直接描画
   setupBioAnimation();
