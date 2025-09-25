@@ -40,28 +40,54 @@
             </div>
 
             <!-- 右：Bioテキスト -->
-            <div class="bio-text" data-fade-slide>
-              <h2 class="bio-title" data-i18n="introGreeting"></h2>
-              <p class="bio-desc" data-i18n="introBody"></p>
+            
+<div class="bio-text" data-fade-slide>
+  <div class="title-row">
+    <h2 class="bio-title" data-i18n="introGreeting"></h2>
+    <nav class="profile-links" aria-label="Social links">
+      <a class="plink yt" href="https://youtube.com/@ayappii_vrc?si=veligkgomXhBy2HE" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.75 15.5v-7l6.5 3.5-6.5 3.5Z"/>
+        </svg>
+      </a>
+      <a class="plink x" href="https://x.com/froppii_" target="_blank" rel="noopener" aria-label="X">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M18.244 2H21l-6.51 7.44L22.5 22h-6.91l-4.49-5.88L5.8 22H3l7.05-8.05L1.5 2h6.91l4.14 5.42L18.244 2Zm-1.21 18.03h1.91L7.03 3.97H5.12l11.914 16.06Z" />
+        </svg>
+      </a>
+    </nav>
+  </div>
 
-              <ul class="bio-tags">
-                <li>JSL: <span data-i18n="levelJSL">日本手話</span></li>
-                <li>ASL: <span data-i18n="levelASL">アメリカ手話</span></li>
-              </ul>
+  <p class="bio-desc" data-i18n="introBody"></p>
 
-              <nav class="profile-links" aria-label="Social links">
-                <a class="plink x" href="https://x.com/froppii_" target="_blank" rel="noopener" aria-label="X">
-                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                    <path d="M18.244 2H21l-6.51 7.44L22.5 22h-6.91l-4.49-5.88L5.8 22H3l7.05-8.05L1.5 2h6.91l4.14 5.42L18.244 2Zm-1.21 18.03h1.91L7.03 3.97H5.12l11.914 16.06Z" />
-                  </svg>
-                </a>
-                <a class="plink yt" href="https://youtube.com/@ayappii_vrc?si=veligkgomXhBy2HE" target="_blank" rel="noopener" aria-label="YouTube">
-                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.75 15.5v-7l6.5 3.5-6.5 3.5Z"/>
-                  </svg>
-                </a>
-              </nav>
-            </div>
+  <div class="bio-stats card-lite" role="group" aria-label="Profile quick info">
+    <div class="row">
+      <div class="label"><span data-i18n="languageLabel">言語：</span>
+      </div>
+      <div class="value">
+        <div class="lang-icons">
+    <img src="assets/JP.png" alt="JP" class="flag-img">
+    <img src="assets/ENG.png" alt="ENG" class="flag-img">
+    <img src="assets/JSL.png" alt="JSL" class="flag-img">
+    <img src="assets/ASL.png" alt="ASL" class="flag-img">
+  </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="label"><span data-i18n="statusLabel">ステータス：</span>
+      </div>
+      <div class="value">
+        <ul class="status-list" aria-label="status">
+          <li class="s1"><span class="dot" aria-hidden="true"></span><span data-i18n="status1">イベント開催中。誰でもいらっしゃい！</span></li>
+          <li class="s2"><span class="dot" aria-hidden="true"></span><span data-i18n="status2">基本。手話べりしてるよ。</span></li>
+          <li class="s3"><span class="dot" aria-hidden="true"></span><span data-i18n="status3">そっとしておいてね...!</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
         </div>
       </section>
