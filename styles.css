@@ -814,3 +814,164 @@ video{display:block; width:100%; height:auto; border-radius:12px; background:#00
   border-radius: 16px;
 }
 
+
+/* === Added: Profile title-row & white info card === */
+.title-row{ display:flex; align-items:center; gap:10px; }
+.title-row .bio-title{ margin:0; line-height:1.2; }
+
+.card-lite{
+  background:#fff;
+  border:1px solid #dfe8ce;
+  border-radius:14px;
+  box-shadow: var(--shadow);
+  padding:14px 16px;
+}
+
+.bio-stats{ display:grid; gap:25px; margin-top:6px; }
+.bio-stats .row{
+  display:grid;
+  grid-template-columns: 110px 1fr;
+  gap:8px;
+  align-items:start;
+}
+.bio-stats .label{ font-weight:800; color:var(--moss-ink); }
+.bio-stats .label-en{ font-size:.8rem; color:var(--muted); margin-top:4px; }
+
+.lang-icons{ display:flex; gap:12px; align-items:center; }
+.flag{ font-size:14px; padding:2px 6px; border-radius:999px; background:#eef4e6; border:1px solid #d7e2c4; }
+
+.status-list{ list-style:none; margin:0; padding:0; display:grid; gap:6px; }
+.status-list .dot{
+  display:inline-block; width:10px; height:10px; border-radius:50%;
+  margin-right:8px; vertical-align:middle;
+  box-shadow: 0 0 0 2px #fff inset;
+}
+/* Colors corrected: s1=blue, s2=green, s3=yellow */
+.status-list li.s1 .dot{ background:#3b82f6; } /* blue */
+.status-list li.s2 .dot{ background:#22c55e; } /* green */
+.status-list li.s3 .dot{ background:#f59e0b; } /* yellow */
+
+@media (max-width:720px){
+  .bio-stats .row{ grid-template-columns: 96px 1fr; }
+  .flag{ font-size:13px; }
+}
+
+@media (max-width:520px){
+  .title-row{ gap:8px; }
+  .bio-stats{ gap:8px; }
+  .bio-stats .row{ grid-template-columns: 92px 1fr; }
+}
+
+/* Icon frame border color override to red */
+.profile-links .plink{ border-color:#e64646 !important; }
+
+
+/* === Revise per latest feedback === */
+/* 1) Left profile image red frame */
+.photo-vertical{
+  border-width:10px !important;
+  border-color:#b85a53 !important; /* warm red like screenshot */
+  background:#fff !important;
+}
+
+/* 1b) Revert SNS icon frame color to original (not red) */
+.profile-links .plink{ border-color:#d7e2c4 !important; }
+
+/* 2) English captions under Japanese labels stay small and single line */
+.bio-stats .label-en{
+  font-size:.8rem;
+  color:var(--muted);
+  margin-top:2px;
+  white-space:nowrap;
+}
+
+/* 3) Status dots: perfect round and sizes */
+.status-list .dot{
+  width:16px; height:16px; border-radius:50%;
+  margin-right:12px;
+  border:2px solid #ffffff;
+  box-shadow:0 1px 0 rgba(0,0,0,.08);
+}
+
+/* Colors: s1=blue, s2=green, s3=yellow */
+.status-list li.s1 .dot{ background:#1f96c8; } /* teal-blue per screenshot tone */
+.status-list li.s2 .dot{ background:#5fbf7b; } /* green */
+.status-list li.s3 .dot{ background:#f39a3c; } /* yellow/orange */
+ 
+/* Language flags: round white chips with subtle border */
+.lang-icons{ gap:18px; }
+.flag{
+  width:30px; height:30px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:16px; line-height:1;
+  background:#ffffff; border:1px solid #e6e8e1;
+  box-shadow:0 1px 2px rgba(0,0,0,.05), inset 0 0 0 2px #ffffff;
+}
+
+
+/* Hide the big glassy panel background/border */
+.bio-panel{
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Language icons: use raw images without rounded chip */
+.lang-icons{ gap:12px !important; }
+.lang-icons img.flag-img{
+  height:28px; width:auto;
+  border:none !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+
+
+/* === Mobile-specific compact tweaks === */
+@media (max-width: 560px){
+  /* remove space between image and title when stacked */
+  .profile-grid{ gap:8px !important; }
+  .bio-media{ margin-bottom:0 !important; }
+  .bio-text{ margin-top:0 !important; }
+  .bio-title{ margin-top:0 !important; }
+
+  /* keep each status line on a single line (no wrapping) */
+  .status-list li{ white-space: nowrap !important; }
+}
+
+
+/* === Mobile fixes (image overflow + spacing + one-line statuses) === */
+@media (max-width: 720px){
+  .profile-grid{ row-gap: 6px !important; } /* image ↔ title spacing minimal */
+}
+
+@media (max-width: 560px){
+  html, body{ overflow-x: hidden !important; }
+
+  /* Make image area fully fit viewport width */
+  .profile-grid .bio-media{ width: 100% !important; margin-inline:auto !important; }
+  .profile-grid .photo-vertical{ position: static !important; transform: none !important; width: 100% !important; }
+
+  /* Language ↔ Status spacing a bit larger so they don't feel cramped */
+  .bio-stats{ gap: 18px !important; }
+  .bio-stats .row + .row{ margin-top: 10px !important; }
+
+  /* Status lines: keep single line without clipping */
+  .status-list{ font-size: clamp(.86rem, 3.2vw, .95rem) !important; }
+  .status-list li{
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Language icons a bit smaller on very small screens */
+  .lang-icons img.flag-img{ height: 22px !important; }
+}
+
+@media (max-width: 560px){
+  .bio-stats .label [data-i18n="statusLabel"]{ font-size: .95rem; white-space: nowrap; }
+}
