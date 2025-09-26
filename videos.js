@@ -60,8 +60,15 @@ window.VIDEOS = [
     title: { ja: "【限定公開・共有禁止】「全国手話検定５級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
     datePosted: "2025-09-22",
     tags: ["Archive"],
-    caption: { ja: "【担当】えすな【通訳】ユウ【クイズ】えすな、ユウ、ちろる、あやっぴ", en: "Host: Esna|Translator:Yu|Quiz:Esna,Yu,Chiroru,Ayappii" },
+    caption: { ja: "【担当】えすな【通訳】ユウ【クイズ】えすな、ユウ、ちろる、あやっぴ", en: "Host: Esna| Translator:Yu| Quiz: Esna/Yu/Chiroru/Ayappii" },
     src: "https://youtu.be/Z7Uyr4uBLrc"
+  },
+  {
+    id: "v9",
+    title: { ja: "【手話寸劇】カフェでのやり取り", en: "【mini skit】Ordering in cafe" },
+    datePosted: "2025-09-26",
+    tags: ["JSL"],
+    caption: { ja: "キャラメルフラぺって美味しいのね！", en: "what's your favorite drink in cafe?" },
+    src: "https://youtu.be/h8R1298awAY"
   }
-
 ];
