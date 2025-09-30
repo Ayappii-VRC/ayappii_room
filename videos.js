@@ -70,5 +70,13 @@ window.VIDEOS = [
     tags: ["JSL"],
     caption: { ja: "キャラメルフラぺって美味しいのね！", en: "what's your favorite drink in cafe?" },
     src: "https://youtu.be/h8R1298awAY"
+  },
+  {
+    id: "v10",
+    title: { ja: "【限定公開・共有禁止】「手話技能検定３・４級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-09-29",
+    tags: ["Archive"],
+    caption: { ja: "【担当】あやっぴ", en: "Host: Ayappii" },
+    src: "https://youtu.be/Bl4pw6EZpqY?si=W7vuSwO5EKpzk2px"
   }
 ];
