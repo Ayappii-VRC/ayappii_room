@@ -1,6 +1,6 @@
 window.POSTS = [
     {
-  id: "b2",
+  id: "b1",
   title: { ja: "初投稿✨", en: "First Post ✨" },
   datePosted: "2025-08-17",
   tags: ["Other"],
@@ -20,15 +20,51 @@ window.POSTS = [
 <p>マイペースですが、どうぞよろしくお願いします！</p>
     `,
     en: `
-<h3>Hello!</h3>
-<p>I'm Ayappii, thanks for visiting the page! I've been captivated by VRChat, and right now I'm deeply into sign language ( >_< ).</p>
+<p>Hello, I’m Ayappii. Lately, I’ve found myself deeply engaged with VRChat, and through it, I’ve discovered a genuine fascination with sign language.</p>
 
-<p>Having sign talk inside VRC is fun, but I wanted to try something new, leading me to launch this site out of blue haha. Honestly, I don’t yet know how it will be run. As written in my profile, the purpose is to keep a personal learning log. I'll post blogs and videos whenever I feel like it.</p>
+<p>Communicating in sign language within VRChat has opened a new dimension of connection for me. It feels expressive, warm, and deeply human. At some point, I wanted to explore that experience more intentionally, which led me to create this site.
 
-<p>Sign language is such a fascinating language, and for the mute users in VRChat, it could be a powerful ally. This site is simply a place for me to share my love for sign language, whether or not you’re already into VRC.</p>
+I don’t have a fixed plan for how this space will evolve. As mentioned in my profile, it’s primarily a personal record of learning—something I hope will grow naturally over time. I’ll be sharing blog posts and videos whenever I have something meaningful to capture or reflect on.</p>
+
+<p>Sign language, to me, is more than a tool for communication. It’s a bridge that allows expression beyond words, and in virtual spaces like VRChat, it creates an entirely new way to connect.</p>
 
 <p>It'll be at my own pace, but I hope you enjoy it!</p>
     `
   }
-}
+},
+{
+  id: "b2",
+  title: { ja: "単語「基準」", en: "Sign “Standard”" },
+  datePosted: "2025-10-04",
+  tags: ["JSL"],
+  excerpt: { 
+    ja: "", 
+    en: "" 
+  },
+  content: {
+    ja: `
+<h3>フレンドさんの手話イベントに参加しに、新宿のワールドに行ってきました！</h3>
+<a href="https://vrchat.com/home/launch?worldId=wrld_c82a5c14-97a5-4782-a034-d897d2d943a2" target="_blank" rel="noopener">🌍ワールドはこちら</a>
+
+<p>ふと気になって事前に調べておいた単語「基準」を手話べりで使う機会があったので、記録します！<br>「新宿って本当に広いね」とフレンドさんに聞かれたので、「かな？広い基準が分からない(>_<)」と手話べりの時に使ったよ～。
+</p>
+
+<a href="https://www.nhk.or.jp/strl/signlanguagecg/searchJSL/keyword.html?word=%E5%9F%BA%E6%BA%96" target="_blank" rel="noopener">✋【基準】の手話表現</a>
+
+<p><a href="https://www.nhk.or.jp/strl/signlanguagecg/searchJSL/keyword.html?word=%E5%9F%BA%E6%BA%96" target="_blank" rel="noopener">「元々・基本・由来」</a>という手話に少し似ていますね！</p>
+    `,
+    en: `
+<h3>Vistied my friend’s sign language event held in the Shinjuku world :)</h3>
+
+<a href="https://vrchat.com/home/launch?worldId=wrld_c82a5c14-97a5-4782-a034-d897d2d943a2" target="_blank" rel="noopener">🌍 World link</a>
+
+<p>Before joining, I’d looked up the sign for “standard” just out of curiosity, and I actually got the chance to use it during our conversation, so I wanted to write it down here.<br>My friend asked, “Shinjuku is indeed big”, so I was like, “ig? I’m not really sure what the standard for big is :p”
+</p>
+
+<a href="https://www.nhk.or.jp/strl/signlanguagecg/searchJSL/keyword.html?word=%E5%9F%BA%E6%BA%96" target="_blank" rel="noopener">✋ How to Sign “Standard”</a>
+
+<p>It looks a bit similar to the signs for<a href="https://www.nhk.or.jp/strl/signlanguagecg/searchJSL/keyword.html?word=%E5%9F%BA%E6%BA%96" target="_blank" rel="noopener">“origin,” “base,” or “foundation.”</a></p>
+    `
+  }
+},
 ];
