@@ -84,7 +84,7 @@ const STRINGS = {
   en: {
     introGreeting: "gm!",
     introBody:
-      "A hearing person in love with sign language <3 This is a place to keep track of my learning journey. 【Disclaimer】 it’s not for educational purposes (>_<)",
+      "A hearing person in love with sign language <3 This is a place to keep track of my learning journey. 【Disclaimer】 it’s not for educational purposes!!!",
     searchLabel: "Search title",
     sortLabel: "Sort",
     sortNewest: "Newest first",
