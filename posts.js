@@ -54,7 +54,7 @@ I don’t have a fixed plan for how this space will evolve. As mentioned in my p
 <p><a href="https://www.nhk.or.jp/strl/signlanguagecg/searchJSL/keyword.html?word=%E5%9F%BA%E6%BA%96" target="_blank" rel="noopener">「元々・基本・由来」</a>という手話に少し似ていますね！</p>
     `,
     en: `
-<h3>Vistied my friend’s sign language event held in the Shinjuku world :)</h3>
+<h3>Visited my friend’s sign language event held in the Shinjuku world :)</h3>
 
 <a href="https://vrchat.com/home/launch?worldId=wrld_c82a5c14-97a5-4782-a034-d897d2d943a2" target="_blank" rel="noopener">🌍 World link</a>
 
@@ -68,3 +68,4 @@ I don’t have a fixed plan for how this space will evolve. As mentioned in my p
   }
 },
 ];
+
