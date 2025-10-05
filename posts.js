@@ -105,10 +105,7 @@ I don’t have a fixed plan for how this space will evolve. As mentioned in my p
   </p>
 
   <p>
-    🌍使用したワールド: 
-    <a href=\"https://nekoyamakun.booth.pm/items/3521522\" target=\"_blank\">
-      https://nekoyamakun.booth.pm/items/3521522
-    </a>
+      <a href="https://nekoyamakun.booth.pm/items/3521522\" target="_blank" rel="noopener">🌍使用したワールド</a>
   </p>
 
   <p>
@@ -150,11 +147,8 @@ For anything confusing, the internet is a treasure trove of answers. ✨
     Lately, the brightness from my HMD has been straining my eyes, so I've adjusted the lighting and give it a calm, nighttime atmosphere.
   </p>
 
-  <p>
-    🌍World Assets Used: 
-    <a href=\"https://nekoyamakun.booth.pm/items/3521522\" target=\"_blank\">
-      https://nekoyamakun.booth.pm/items/3521522
-    </a>
+ <p>
+      <a href="https://nekoyamakun.booth.pm/items/3521522\" target="_blank" rel="noopener">🌍World Used </a>
   </p>
 
   <p>
@@ -177,3 +171,4 @@ The world won’t be made public, So if you ever spot me hanging out there in VR
 },
 
 ];
+
