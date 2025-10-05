@@ -67,5 +67,113 @@ I don’t have a fixed plan for how this space will evolve. As mentioned in my p
     `
   }
 },
-];
+{
+  id: "b3",
+  title: { ja: "マイワールド「Ayappii Room」を作ったよ！！", en: "Created My First World: “Ayappii Room”!" },
+  datePosted: "2025-10-05",
+  tags: ["Other"],
+  excerpt: { 
+    ja: "", 
+    en: "" 
+  },
+  content: {
+    ja: `
 
+<p>
+    初ワールド製作でした！<br>
+    そもそもワールドってどうやって作るの？？と、知識ゼロから始まった作業。
+    ネットで「VRCワールド作成」と調べると、たくさん情報がヒットするので、まずはそれらの記事を読むところから始めてみた。
+    今回はBlenderからではなく既存のアセットを組み合わせて進めるよ！
+    結論からいうと、アバター改変と勝手が違うところもあるけど、一度慣れたら問題なさそう！
+  </p>
+
+<p>
+    アバター改変との違いは色々ある。
+    例えばよく使う機能でいうなら、確認方法とか違うかな？<br>
+    アバターの場合はGesture Managerを入れるけど、ワールドの場合は、そのままUnityの画面上にある再生ボタンを押せばOK。<br>
+    分からないことはネットで調べたら基本的に全て解決できると思う✨
+  </p>
+
+  <figure>
+    <img src=\"https://drive.google.com/file/d/1pvq-scUSqmdqYc9t8ELkuzTddrua3I6-/view?usp=drive_link" alt=\"Ayappii Roomのサムネ\">
+    <figcaption>サムネも作ってみた！</figcaption>
+  </figure>
+
+  <p>
+    最近HMDの光が目に負担で、明るい場所は避け気味...。<br>
+    なのでAyappii Roomでは、既存のワールドアセットのライティングを変えて、夜の雰囲気に変えてみたよ！
+  </p>
+
+  <p>
+    🌍使用したワールド: 
+    <a href=\"https://nekoyamakun.booth.pm/items/3521522\" target=\"_blank\">
+      https://nekoyamakun.booth.pm/items/3521522
+    </a>
+  </p>
+
+  <p>
+    紅茶ギミック、QVペンの模様替え...ワールド作成ってこだわるほどお金があっという間に消えちゃうのね（泣）<br>
+    でも楽しいからBOOTHを開いちゃう....。<br>
+    ワールドはパブリック化しないので、もしVRC内で私がこのワールドにいるのを見かけたら遊びに来てね～～！！
+  </p>
+
+  <figure>
+    <img src=\"https://drive.google.com/file/d/19TwgNFPxmllNNkzsAexV_3MUbGk-fTjk/view?usp=drive_link" alt=\"カエルのイラスト\">
+    <figcaption>フレンドさんが部屋のあちこちにカエルのイラストを描いてくれたよ！</figcaption>
+  </figure>
+
+  <figure>
+    <img src=\"https://drive.google.com/file/d/1nAdWqdEe-1N5O94dVrzv1CCM-1t81_uX/view?usp=drive_link" alt=\"みんなでわちゃわちゃ\">
+    <figcaption>みんなでわちゃわちゃ～！</figcaption>
+  </figure>
+    `,
+    en: `
+<p>
+    I finally made my very first VRChat world!<br>
+    That being said, I'm an absolute beginner. My first step was to search and diving into all the guides and tutorials I could find online.<br>
+    
+    As a starter, I experimented by combining existing assets. And honestly? While it feels quite different from modifying avatars, once you get the hang of it, it’s not so bad at all!
+  </p>
+
+<p>
+There are a few key differences between world building and avatar editing. For example, the testing process is different: with avatars, we usually use the Gesture Manager, but for worlds, you can just hit the play button right in Unity to preview. Pretty convenient! <br>
+
+For anything confusing, the internet is a treasure trove of answers. ✨
+</p>
+
+<figure>
+    <img src=\"https://drive.google.com/file/d/1pvq-scUSqmdqYc9t8ELkuzTddrua3I6-/view?usp=drive_link" alt=\"Ayappii Roomのサムネ\">
+    <figcaption>Here's my thumbnail</figcaption>
+  </figure>
+
+  <p>
+    Lately, the brightness from my HMD has been straining my eyes, so I've adjusted the lighting and give it a calm, nighttime atmosphere.
+  </p>
+
+  <p>
+    🌍World Assets Used: 
+    <a href=\"https://nekoyamakun.booth.pm/items/3521522\" target=\"_blank\">
+      https://nekoyamakun.booth.pm/items/3521522
+    </a>
+  </p>
+
+  <p>
+   Adding a tea set gimmick, redecorating my QV pen, and other little details, I’ve realized how quickly the costs can pile up 😭. And yet I can’t help browsing BOOTH for more assets…
+
+The world won’t be made public, So if you ever spot me hanging out there in VRChat, feel free to drop by and join me!
+  </p>
+
+  <figure>
+    <img src=\"https://drive.google.com/file/d/19TwgNFPxmllNNkzsAexV_3MUbGk-fTjk/view?usp=drive_link" alt=\"カエルのイラスト\">
+    <figcaption>My friend drew cute little frog illustrations all around the room!</figcaption>
+  </figure>
+
+  <figure>
+    <img src=\"https://drive.google.com/file/d/1nAdWqdEe-1N5O94dVrzv1CCM-1t81_uX/view?usp=drive_link" alt=\"みんなでわちゃわちゃ\">
+    <figcaption>mood</figcaption>
+  </figure>
+    `,
+  }
+},
+
+];
