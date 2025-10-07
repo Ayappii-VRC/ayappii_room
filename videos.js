@@ -78,5 +78,13 @@ window.VIDEOS = [
     tags: ["Archive"],
     caption: { ja: "【担当】あやっぴ", en: "Host: Ayappii" },
     src: "https://youtu.be/Bl4pw6EZpqY?si=W7vuSwO5EKpzk2px"
+  },
+  {
+    id: "v11",
+    title: { ja: "【限定公開・共有禁止】「手話通訳技能認定試験」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-10-06",
+    tags: ["Archive"],
+    caption: { ja: "【担当】ユウ", en: "Host: Yu" },
+    src: "https://youtu.be/aCQHxYRV96E"
   }
 ];
