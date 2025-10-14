@@ -86,5 +86,14 @@ window.VIDEOS = [
     tags: ["Archive"],
     caption: { ja: "【担当】ユウ", en: "Host: Yu" },
     src: "https://youtu.be/aCQHxYRV96E"
-  }
+  },
+  {
+    id: "v12",
+    title: { ja: "【限定公開・共有禁止】「全国手話検定級５・３・２級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-10-13",
+    tags: ["Archive"],
+    caption: { ja: "【担当】ちろる【クイズ】ユウ、あやっぴ", en: "Host: Yu | Quiz: Yu,Ayappii" },
+    src: "https://youtu.be/AEEjIsT_EJM"
+  },
+  
 ];
