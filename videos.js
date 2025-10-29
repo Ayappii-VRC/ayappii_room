@@ -103,5 +103,5 @@ window.VIDEOS = [
     caption: { ja: "【担当】えすな【クイズ】ユウ、あやっぴ", en: "Host: Esna | Quiz: Yu,Ayappii" },
     src: "https://youtu.be/qyDA6dzYSUQ"
   },
-  
 ];
+
