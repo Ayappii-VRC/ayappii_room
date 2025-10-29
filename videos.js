@@ -103,5 +103,13 @@ window.VIDEOS = [
     caption: { ja: "【担当】えすな【クイズ】ユウ、あやっぴ", en: "Host: Esna | Quiz: Yu,Ayappii" },
     src: "https://youtu.be/qyDA6dzYSUQ"
   },
+  {
+    id: "v14",
+    title: { ja: "【紹介動画】手話検定対策イベント", en: "【PV】JSL Exam Study Event" },
+    datePosted: "2025-10-16",
+    tags: ["JSL","Other"],
+    caption: { ja: "手話に興味あるかた、いらっしゃい！", en: "come join us!" },
+    src: "https://youtu.be/0Wfs1r2PGHs?si=SOkwqQMfEtpw6b8u"
+  },
+  
 ];
-
