@@ -114,7 +114,7 @@ window.VIDEOS = [
   {
     id: "v15",
     title: { ja: "【限定公開・共有禁止】「全国手話検定級4級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
-    datePosted: "2025-11-3",
+    datePosted: "2025-11-03",
     tags: ["Archive"],
     caption: { ja: "【担当】そりん【通訳】ユウ", en: "Host: Seorin | Translator: Yu" },
     src: "https://youtu.be/7PP8zfnXfFY"
