@@ -119,5 +119,21 @@ window.VIDEOS = [
     caption: { ja: "【担当】そりん【通訳】ユウ", en: "Host: Seorin | Translator: Yu" },
     src: "https://youtu.be/7PP8zfnXfFY"
   },
+  {
+    id: "v16",
+    title: { ja: "【限定公開・共有禁止】「日常会話の読み取り」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-11-10",
+    tags: ["Archive"],
+    caption: { ja: "【担当】ユウ", en: "Host: Yu" },
+    src: "https://youtu.be/lk7fTTcNpcQ"
+  },
+  {
+    id: "v17",
+    title: { ja: "【限定公開・共有禁止】「全国手話検定級5級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-11-17",
+    tags: ["Archive"],
+    caption: { ja: "【担当】エスナ【通訳】ユウ", en: "Host: Esna | Translator: Yu" },
+    src: "https://youtu.be/iBXvjU8m-Vo"
+  },
   
 ];
