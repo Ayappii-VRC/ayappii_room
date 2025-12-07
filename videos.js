@@ -135,5 +135,12 @@ window.VIDEOS = [
     caption: { ja: "【担当】エスナ【通訳】ユウ", en: "Host: Esna | Translator: Yu" },
     src: "https://youtu.be/iBXvjU8m-Vo"
   },
-  
+  {
+    id: "v18",
+    title: { ja: "【限定公開・共有禁止】「手話技能検定３級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-12-01",
+    tags: ["Archive"],
+    caption: { ja: "【担当】あやっぴ【通訳】ユウ", en: "Host: Ayappii | Translator: Yu" },
+    src: "https://youtu.be/xKnDbcJ4q30"
+  },
 ];
