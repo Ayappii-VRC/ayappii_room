@@ -143,4 +143,21 @@ window.VIDEOS = [
     caption: { ja: "【担当】あやっぴ【通訳】ユウ", en: "Host: Ayappii | Translator: Yu" },
     src: "https://youtu.be/xKnDbcJ4q30"
   },
+    {
+    id: "v19",
+    title: { ja: "【限定公開・共有禁止】「手話の読み取りとシャドーイング」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-12-08",
+    tags: ["Archive"],
+    caption: { ja: "【担当】ユウ", en: "Host: Yu" },
+    src: "https://youtu.be/96S_vTpYVYg"
+  },
+    {
+    id: "v20",
+    title: { ja: "【限定公開・共有禁止】「全国手話検定５級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2025-12-15",
+    tags: ["Archive"],
+    caption: { ja: "【担当】エスナ【通訳】ユウ", en: "Host: Esna｜Translator: Yu" },
+    src: "https://youtu.be/HyXFptVI8Fc"
+  },
 ];
+
