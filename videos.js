@@ -137,7 +137,7 @@ window.VIDEOS = [
   },
   {
     id: "v18",
-    title: { ja: "【限定公開・共有禁止】「手話技能検定３級」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    title: { ja: "【限定公開・共有禁止】「都道府県①」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
     datePosted: "2025-12-01",
     tags: ["Archive"],
     caption: { ja: "【担当】あやっぴ【通訳】ユウ", en: "Host: Ayappii | Translator: Yu" },
@@ -159,5 +159,14 @@ window.VIDEOS = [
     caption: { ja: "【担当】エスナ【通訳】ユウ", en: "Host: Esna｜Translator: Yu" },
     src: "https://youtu.be/HyXFptVI8Fc"
   },
+    {
+    id: "v21",
+    title: { ja: "【限定公開・共有禁止】「指文字」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2026-01-12",
+    tags: ["Archive"],
+    caption: { ja: "【担当】ちろる【通訳】ユウ", en: "Host: Chiroru｜Translator: Yu" },
+    src: "https://youtu.be/P2ad1oUIssQ"
+  },
 ];
+
 
