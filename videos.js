@@ -167,6 +167,15 @@ window.VIDEOS = [
     caption: { ja: "【担当】ちろる【通訳】ユウ", en: "Host: Chiroru｜Translator: Yu" },
     src: "https://youtu.be/P2ad1oUIssQ"
   },
+    {
+    id: "v22",
+    title: { ja: "【限定公開・共有禁止】「日本語から手話への翻訳」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2026-01-19",
+    tags: ["Archive"],
+    caption: { ja: "【担当】ユウ", en: "Host: Yu" },
+    src: "https://youtu.be/FiXOJqByXhI"
+  },
 ];
+
 
 
