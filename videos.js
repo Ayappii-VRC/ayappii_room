@@ -175,7 +175,16 @@ window.VIDEOS = [
     caption: { ja: "【担当】ユウ", en: "Host: Yu" },
     src: "https://youtu.be/FiXOJqByXhI"
   },
+    {
+    id: "v23",
+    title: { ja: "【限定公開・共有禁止】「都道府県②（中部・近畿・中国・四国）」手話検定対策アーカイブ", en: "【DO NOT SHARE】Event Archive" },
+    datePosted: "2026-01-26",
+    tags: ["Archive"],
+    caption: { ja: "【担当】あやっぴ", en: "Host: Ayappii" },
+    src: "https://youtu.be/pRrQr1m7TNI"
+  },
 ];
+
 
 
 
